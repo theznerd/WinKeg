@@ -1,0 +1,170 @@
+﻿<Page
+    x:Class="WinKegCore.HomeView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinKegCore"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Background="{StaticResource WinKeg.Colors.ThemeBackground}">
+    <Viewbox Stretch="Uniform">
+        <Grid Width="1920" Height="1080">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="9*" />
+            </Grid.RowDefinitions>
+            
+            <!-- Header -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <Image Source="/Assets/Logo.png"
+                       Stretch="Uniform" HorizontalAlignment="Left"
+                       Margin="0,0,20,0"/>
+
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="ms-appx:/Assets/NexaDemo-Light.ttf#Nexa Demo"
+                           FontSize="30"
+                           Grid.Column="1"
+                           Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
+                    The Ziehnert's Beverage Fountain <!-- TODO: Bind -->
+                </TextBlock>
+
+                <StackPanel Orientation="Vertical" Grid.Column="2" Margin="0,10,0,0">
+                    <TextBlock FontFamily="ms-appx:/Assets/NexaDemo-Light.ttf#Nexa Demo"
+                               FontSize="20"
+                               Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
+                        <Run Text="Current Kegerator Temperature: " FontFamily="ms-appx:/Assets/NexaDemo-Bold.ttf#Nexa Demo" />
+                        <Run Text="34.7°F" /> <!-- TODO: Bind -->
+                    </TextBlock>
+                    <TextBlock FontFamily="ms-appx:/Assets/NexaDemo-Light.ttf#Nexa Demo"
+                               FontSize="20"
+                               Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
+                        <Run Text="Compressor Last Started: " FontFamily="ms-appx:/Assets/NexaDemo-Bold.ttf#Nexa Demo" />
+                        <Run Text="08/02/2020 11:34:29 PM" /> <!-- TODO: Bind -->
+                    </TextBlock>
+                    <TextBlock FontFamily="ms-appx:/Assets/NexaDemo-Light.ttf#Nexa Demo"
+                               FontSize="20"
+                               Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
+                        <Run Text="Compressor Last Runtime: " FontFamily="ms-appx:/Assets/NexaDemo-Bold.ttf#Nexa Demo" />
+                        <Run Text="Currently Running..." /> <!-- TODO: Bind -->
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Grid.Column="3" Margin="0,10,0,0">
+                    <TextBlock FontFamily="ms-appx:/Assets/NexaDemo-Light.ttf#Nexa Demo"
+                               FontSize="20"
+                               Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
+                        <Run Text="Current Power Use: " FontFamily="ms-appx:/Assets/NexaDemo-Bold.ttf#Nexa Demo" />
+                        <Run Text="11w" /> <!-- TODO: Bind -->
+                    </TextBlock>
+                    <TextBlock FontFamily="ms-appx:/Assets/NexaDemo-Light.ttf#Nexa Demo"
+                               FontSize="20"
+                               Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
+                        <Run Text="Monthly Power Use: " FontFamily="ms-appx:/Assets/NexaDemo-Bold.ttf#Nexa Demo" />
+                        <Run Text="3kW" /> <!-- TODO: Bind -->
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+            
+            <!-- Kegs -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <controls:DropShadowPanel BlurRadius="50"
+                                          ShadowOpacity="0.7"
+                                          OffsetX="40"
+                                          OffsetY="55"
+                                          Color="#55000000"
+                                          HorizontalContentAlignment="Stretch"
+                                          VerticalContentAlignment="Stretch">
+                    <Border CornerRadius="15"
+                            Margin="40">
+                        <Grid Background="{StaticResource WinKeg.Colors.ThemeBackground}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height=".6*" />
+                                <RowDefinition Height=".3*" />
+                                <RowDefinition Height="2.5*" />
+                                <RowDefinition Height=".3*" />
+                                <RowDefinition Height=".4*" />
+                                <RowDefinition Height=".3*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Viewbox>
+                                <TextBlock HorizontalAlignment="Center" Margin="0,2,0,-2"
+                                           FontFamily="ms-appx:/Assets/NexaDemo-Light.ttf#Nexa Demo"
+                                           Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">Boots with the Fur</TextBlock>
+                            </Viewbox>
+                            <Viewbox Grid.Row="1">
+                                <TextBlock HorizontalAlignment="Center"
+                                           FontFamily="ms-appx:/Assets/NexaDemo-Light.ttf#Nexa Demo"
+                                           Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">Imperial Stout</TextBlock>
+                            </Viewbox>
+                            <Viewbox Grid.Row="2">
+                                <Grid>
+                                    <Ellipse Height="450" Width="450" Margin="0">
+                                        <Ellipse.Fill>
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="ms-appx:/Assets/cat.jpg" Opacity="1" />
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Grid Width="900" Height="500">
+                                        <TextBlock Foreground="{StaticResource WinKeg.Colors.ThemeForeground}"
+                                               Opacity="0"
+                                               HorizontalAlignment="Stretch" VerticalAlignment="Center" 
+                                               TextWrapping="WrapWholeWords" TextAlignment="Center"
+                                               FontFamily="ms-appx:/Assets/NexaDemo-Light.ttf#Nexa Demo"
+                                               FontSize="40">
+                                            It's gonna knock your boots off... that's for sure. It's a basic bitch drink turned alcoholic. Notes of vanilla and caramel in an almost disgustingly sweet package.
+                                        </TextBlock>
+                                    </Grid>
+                                </Grid>
+                            </Viewbox>
+                            <Viewbox Grid.Row="3">
+                                <TextBlock Margin="0,0,5,0"
+                                           FontFamily="ms-appx:/Assets/NexaDemo-Light.ttf#Nexa Demo"
+                                           Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
+                                        <Run>ABV: </Run>
+                                        <Run>11.2</Run>
+                                        <Run>% | </Run>
+                                        <Run>IBUs: </Run>
+                                        <Run>34</Run>
+                                </TextBlock>
+                            </Viewbox>
+                            <ProgressBar Grid.Row="4" Margin="40,5" 
+                                         VerticalAlignment="Stretch" 
+                                         Value="90" 
+                                         HorizontalAlignment="Stretch" 
+                                         Foreground="{StaticResource WinKeg.Colors.AccentBase}" />
+                            <Viewbox Grid.Row="5">
+                                <TextBlock Margin="0,0,5,0"
+                                           FontFamily="ms-appx:/Assets/NexaDemo-Light.ttf#Nexa Demo"
+                                           Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
+                                    <Run>Estimated 16oz Pints Remaining: </Run>
+                                    <Run>32</Run>
+                                </TextBlock>
+                            </Viewbox>
+                            <Viewbox Grid.Row="6">
+                                <Button HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                                        Margin="5,10" Content="Pour Me!" />
+                            </Viewbox>
+                        </Grid>
+                    </Border>
+                </controls:DropShadowPanel>
+            </Grid>
+            <ItemsControl Grid.Row="1">
+                
+            </ItemsControl>
+            
+        </Grid>
+    </Viewbox>
+</Page>

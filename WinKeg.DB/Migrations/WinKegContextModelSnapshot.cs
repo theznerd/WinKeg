@@ -67,6 +67,33 @@ namespace WinKeg.DB.Migrations
                     b.ToTable("BeverageImages");
                 });
 
+            modelBuilder.Entity("WinKeg.DB.Models.Hardware", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Data")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("KegId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("KegeratorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KegId");
+
+                    b.HasIndex("KegeratorId");
+
+                    b.ToTable("Hardware");
+                });
+
             modelBuilder.Entity("WinKeg.DB.Models.HistoryEvent", b =>
                 {
                     b.Property<int>("Id")
@@ -106,20 +133,11 @@ namespace WinKeg.DB.Migrations
                     b.Property<double>("CurrentVolume")
                         .HasColumnType("REAL");
 
-                    b.Property<int>("FlowMeterCalibration")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("FlowPin")
-                        .HasColumnType("INTEGER");
-
                     b.Property<double>("InitialVolume")
                         .HasColumnType("REAL");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("RelayPin")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -154,6 +172,26 @@ namespace WinKeg.DB.Migrations
                     b.HasIndex("KegId");
 
                     b.ToTable("KegHistories");
+                });
+
+            modelBuilder.Entity("WinKeg.DB.Models.Kegerator", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Owner")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Kegerator");
                 });
 
             modelBuilder.Entity("WinKeg.DB.Models.KegeratorEvent", b =>
@@ -227,6 +265,17 @@ namespace WinKeg.DB.Migrations
                     b.HasOne("WinKeg.DB.Models.BeverageImage", "BeverageImage")
                         .WithMany("Beverages")
                         .HasForeignKey("BeverageImageId");
+                });
+
+            modelBuilder.Entity("WinKeg.DB.Models.Hardware", b =>
+                {
+                    b.HasOne("WinKeg.DB.Models.Keg", "Keg")
+                        .WithMany("KegHardware")
+                        .HasForeignKey("KegId");
+
+                    b.HasOne("WinKeg.DB.Models.Kegerator", "Kegerator")
+                        .WithMany("KegeratorHardware")
+                        .HasForeignKey("KegeratorId");
                 });
 
             modelBuilder.Entity("WinKeg.DB.Models.HistoryEvent", b =>

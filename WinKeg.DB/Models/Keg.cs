@@ -12,10 +12,8 @@ namespace WinKeg.DB.Models
         public string Name { get; set; }
         public double InitialVolume { get; set; }
         public double CurrentVolume { get; set; }
-        public int RelayPin { get; set; }
-        public int FlowPin { get; set; }
-        public int FlowMeterCalibration { get; set; }
 
         public ICollection<KegHistory> KegHistories { get; set; }
+        public ICollection<Hardware> KegHardware { get; set; }
     }
 }

@@ -25,6 +25,8 @@ namespace WinKeg.DB
         public DbSet<HistoryEvent> HistoryEvents { get; set; }
         public DbSet<Beverage> Beverages { get; set; }
         public DbSet<BeverageImage> BeverageImages { get; set; }
+        public DbSet<Hardware> Hardware { get; set; }
+        public DbSet<Kegerator> Kegerator { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -22,6 +22,21 @@ namespace WinKeg.DB.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Kegerator",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: true),
+                    Owner = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Kegerator", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "KegeratorEvents",
                 columns: table => new
                 {
@@ -44,10 +59,7 @@ namespace WinKeg.DB.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
                     InitialVolume = table.Column<double>(nullable: false),
-                    CurrentVolume = table.Column<double>(nullable: false),
-                    RelayPin = table.Column<int>(nullable: false),
-                    FlowPin = table.Column<int>(nullable: false),
-                    FlowMeterCalibration = table.Column<int>(nullable: false)
+                    CurrentVolume = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,6 +119,34 @@ namespace WinKeg.DB.Migrations
                         name: "FK_Beverages_BeverageImages_BeverageImageId",
                         column: x => x.BeverageImageId,
                         principalTable: "BeverageImages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Hardware",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Type = table.Column<string>(nullable: true),
+                    Data = table.Column<string>(nullable: true),
+                    KegId = table.Column<int>(nullable: true),
+                    KegeratorId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hardware", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Hardware_Kegs_KegId",
+                        column: x => x.KegId,
+                        principalTable: "Kegs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Hardware_Kegerator_KegeratorId",
+                        column: x => x.KegeratorId,
+                        principalTable: "Kegerator",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -175,6 +215,16 @@ namespace WinKeg.DB.Migrations
                 column: "BeverageImageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Hardware_KegId",
+                table: "Hardware",
+                column: "KegId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Hardware_KegeratorId",
+                table: "Hardware",
+                column: "KegeratorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_HistoryEvents_KegHistoryId",
                 table: "HistoryEvents",
                 column: "KegHistoryId");
@@ -198,6 +248,9 @@ namespace WinKeg.DB.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Hardware");
+
+            migrationBuilder.DropTable(
                 name: "HistoryEvents");
 
             migrationBuilder.DropTable(
@@ -205,6 +258,9 @@ namespace WinKeg.DB.Migrations
 
             migrationBuilder.DropTable(
                 name: "Settings");
+
+            migrationBuilder.DropTable(
+                name: "Kegerator");
 
             migrationBuilder.DropTable(
                 name: "KegHistories");
