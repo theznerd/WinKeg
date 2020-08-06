@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:WinKegCore.Themes">
+    xmlns:local="using:WinKegCore">
 
     <!-- Metadata -->
     <x:String x:Key="Theme.Name">WinKeg-Dark</x:String>
@@ -20,5 +20,10 @@
     <!-- Base Colors -->
     <Color x:Key="WinKeg.Colors.ThemeForeground">#FF000000</Color>
     <Color x:Key="WinKeg.Colors.ThemeBackground">#FFD5CCC0</Color>
-    
+
+    <!-- Font -->
+    <FontFamily x:Key="ContentControlThemeFontFamily">ms-appx:/Assets/nexa-l.ttf#Nexa</FontFamily>
+    <Style TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+    </Style>
 </ResourceDictionary>

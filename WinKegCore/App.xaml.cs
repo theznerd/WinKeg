@@ -4,6 +4,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml.Controls;
 using Caliburn.Micro;
 using WinKegCore.ViewModels;
+using WinKegCore.Views;
 using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
 using WinKegCore.Views.Setup;
@@ -45,7 +46,7 @@ namespace WinKegCore
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true; // Make the titlebar match the view
 
             // Check to see if initial setup is complete
-            if (false && !Setup.SetupComplete())
+            if (!Setup.SetupComplete())
             {
                 DisplayRootView<SetupStartView>();
             }

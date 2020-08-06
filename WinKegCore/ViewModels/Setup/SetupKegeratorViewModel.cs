@@ -1,14 +1,13 @@
-﻿using Caliburn.Micro;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage;
 
-namespace WinKegCore
+namespace WinKegCore.ViewModels.Setup
 {
-    public static class Globals
+    public class SetupKegeratorViewModel
     {
+
     }
 }

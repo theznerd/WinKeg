@@ -119,11 +119,21 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\PasscodeDialog.xaml.cs">
+      <DependentUpon>PasscodeDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\Setup\SetupKegeratorViewModel.cs" />
     <Compile Include="ViewModels\Setup\SetupStartViewModel.cs" />
+    <Compile Include="Views\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Setup\SetupKegeratorView.xaml.cs">
+      <DependentUpon>SetupKegeratorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Setup\SetupStartView.xaml.cs">
       <DependentUpon>SetupStartView.xaml</DependentUpon>
     </Compile>
@@ -217,9 +227,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\NexaDemo-Bold.ttf" />
-  </ItemGroup>
-  <ItemGroup>
+    <Page Include="Dialogs\PasscodeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\WinKeg-Dark.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -232,13 +243,30 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Setup\SetupKegeratorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Setup\SetupStartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\NexaDemo-Light.ttf" />
+    <ProjectReference Include="..\WinKeg.DB\WinKeg.DB.csproj">
+      <Project>{d9138d5c-3122-4a76-816d-fc93957fed2a}</Project>
+      <Name>WinKeg.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WinKeg.Hardware\WinKeg.Hardware.csproj">
+      <Project>{3eea795b-c97b-4e8d-bab9-76e142095721}</Project>
+      <Name>WinKeg.Hardware</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\nexa-b.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\nexa-l.ttf" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

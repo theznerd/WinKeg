@@ -26,22 +26,22 @@
                       StrokeThickness="1" 
                       HorizontalAlignment="Center"/>
                 <TextBlock Foreground="{StaticResource WinKeg.Colors.ThemeForeground}" 
-                           FontFamily="ms-appx:/Assets/NexaDemo-Light.ttf#Nexa Demo"
                            FontSize="80" 
                            HorizontalAlignment="Center" Margin="0,20,0,0">
                     Welcome!
                 </TextBlock>
                 <TextBlock Foreground="{StaticResource WinKeg.Colors.ThemeForeground}" 
-                           Margin="0,-30,0,0"
-                           FontFamily="ms-appx:/Assets/NexaDemo-Light.ttf#Nexa Demo"
+                           Margin="0,-20,0,0"
+                           
                            FontSize="45" 
                            TextAlignment="Center" HorizontalAlignment="Center">
                     Let's get you setup...
                 </TextBlock>
                 <Button 
+                    x:Name="Continue"
                     Margin="0,40,0,0"
                     HorizontalAlignment="Center"
-                    FontFamily="ms-appx:/Assets/NexaDemo-Light.ttf#Nexa Demo" 
+                    
                     FontSize="40">
                     Continue
                 </Button>

@@ -1,0 +1,68 @@
+﻿<Page
+    x:Class="WinKegCore.Views.Setup.SetupKegeratorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinKegCore.Views.Setup"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"  
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cal="using:Caliburn.Micro"
+    mc:Ignorable="d"
+    Background="{StaticResource WinKeg.Colors.ThemeBackground}">
+    <Viewbox Stretch="Uniform">
+        <Grid Width="1920" Height="1080">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image Source="ms-appx:/Assets/Logo.png" 
+                       Height="200" Width="200" 
+                       Margin="0" Grid.Column="1" />
+            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE760;" 
+                      Grid.Row="1" Grid.Column="0" FontSize="100" 
+                      Foreground="{StaticResource WinKeg.Colors.Accent60}"
+                      cal:Message.Attach="[Event Tapped] = [Action Back]"/>
+            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE761;" 
+                      Grid.Row="1" Grid.Column="2" FontSize="100" 
+                      Foreground="{StaticResource WinKeg.Colors.Accent60}"
+                      cal:Message.Attach="[Event Tapped] = [Action Continue]"/>
+            <StackPanel Orientation="Vertical" Grid.Row="1"
+                        Grid.Column="1"
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center">
+                <TextBlock FontSize="50" HorizontalAlignment="Center">First let's get some details!</TextBlock>
+                <Line Stroke="{StaticResource WinKeg.Colors.AccentBase}" 
+                      X1="0" X2="300" 
+                      StrokeThickness="1" 
+                      Margin="20"
+                      HorizontalAlignment="Center"/>
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock FontSize="35" Grid.Row="0" Margin="5" HorizontalAlignment="Right">Give Your Kegerator a Name:</TextBlock>
+                    <TextBox x:Name="KegeratorName" FontSize="25" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="0" Margin="5" Width="500" PlaceholderText="Brewtiful Beverages" IsSpellCheckEnabled="False"/>
+                    <TextBlock FontSize="35" Grid.Row="1" Margin="5" HorizontalAlignment="Right">Who Owns This Kegerator?</TextBlock>
+                    <TextBox x:Name="KegeratorOwner" FontSize="25" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="5" Width="500" PlaceholderText="Charlie Papazian" IsSpellCheckEnabled="False"/>
+                    <TextBlock FontSize="35" Grid.Row="2" Margin="5" HorizontalAlignment="Right">Where Is Your Kegerator Located?</TextBlock>
+                    <TextBox x:Name="KegeratorLocation" FontSize="25" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="5" Width="500" PlaceholderText="Boulder, CO" IsSpellCheckEnabled="False"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Viewbox>
+</Page>

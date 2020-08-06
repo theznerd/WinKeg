@@ -6,23 +6,19 @@
     <caliburn:CaliburnApplication.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary x:Name="ThemeDictionary">
-                    <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="/Themes/WinKeg-Light.xaml" />
-                        <ResourceDictionary>
-                            <ResourceDictionary.ThemeDictionaries>
-                                <ResourceDictionary x:Key="Light">
-                                    <SolidColorBrush x:Key="ButtonBackground" Color="{StaticResource WinKeg.Colors.AccentBase}" />
-                                    <SolidColorBrush x:Key="ButtonForeground" Color="{StaticResource WinKeg.Colors.ThemeBackground}" />
-                                    <SolidColorBrush x:Key="ButtonBorderBrush" Color="{StaticResource WinKeg.Colors.AccentBase}" />
-                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource WinKeg.Colors.Accent60}" />
-                                    <SolidColorBrush x:Key="ButtonBackgroundPointerPressed" Color="{StaticResource WinKeg.Colors.Accent40}" />
-                                    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{StaticResource WinKeg.Colors.Accent60}" />
-                                    <SolidColorBrush x:Key="ButtonBorderBrushPointerPressed" Color="{StaticResource WinKeg.Colors.Accent40}" />
-                                </ResourceDictionary>
-                            </ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary Source="/Themes/WinKeg-Light.xaml" />
+                <ResourceDictionary>
+                    <ResourceDictionary.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Default">
+                            <SolidColorBrush x:Key="ButtonBackground" Color="{StaticResource WinKeg.Colors.AccentBase}" />
+                            <SolidColorBrush x:Key="ButtonForeground" Color="{StaticResource WinKeg.Colors.ThemeBackground}" />
+                            <SolidColorBrush x:Key="ButtonBorderBrush" Color="{StaticResource WinKeg.Colors.AccentBase}" />
+                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource WinKeg.Colors.Accent60}" />
+                            <SolidColorBrush x:Key="ButtonBackgroundPointerPressed" Color="{StaticResource WinKeg.Colors.Accent40}" />
+                            <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{StaticResource WinKeg.Colors.Accent60}" />
+                            <SolidColorBrush x:Key="ButtonBorderBrushPointerPressed" Color="{StaticResource WinKeg.Colors.Accent40}" />
                         </ResourceDictionary>
-                    </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary.ThemeDictionaries>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
