@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,12 @@ namespace WinKegCore
 {
     public class Setup
     {
+        public static void CreateDatabase()
+        {
+            WinKeg.DB.WinKegContext winKegContext = new WinKeg.DB.WinKegContext();
+            winKegContext.Database.Migrate();
+        }
+
         public static bool SetupComplete()
         {
             StorageFolder publisherCache = ApplicationData.Current.GetPublisherCacheFolder("WinKegData");

@@ -119,6 +119,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CaliburnCustom\FrameAdapterEx.cs" />
+    <Compile Include="CaliburnCustom\NavigationExtensions.cs" />
+    <Compile Include="CaliburnCustom\WinRTContainerEx.cs" />
     <Compile Include="Dialogs\PasscodeDialog.xaml.cs">
       <DependentUpon>PasscodeDialog.xaml</DependentUpon>
     </Compile>
@@ -128,8 +131,12 @@
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\Setup\SetupKegeratorViewModel.cs" />
     <Compile Include="ViewModels\Setup\SetupStartViewModel.cs" />
+    <Compile Include="ViewModels\Setup\SetupUserViewModel.cs" />
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Setup\SetupUserView.xaml.cs">
+      <DependentUpon>SetupUserView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Setup\SetupKegeratorView.xaml.cs">
       <DependentUpon>SetupKegeratorView.xaml</DependentUpon>
@@ -242,6 +249,10 @@
     <Page Include="Views\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Setup\SetupUserView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Setup\SetupKegeratorView.xaml">
       <Generator>MSBuild:Compile</Generator>

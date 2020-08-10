@@ -46,6 +46,14 @@
     </Application>
   </Applications>
 
+  <Extensions>
+    <Extension Category="windows.publisherCacheFolders">
+      <PublisherCacheFolders>
+        <Folder Name="WinKegData"/>
+      </PublisherCacheFolders>
+    </Extension>
+  </Extensions>
+
   <Capabilities>
     <Capability Name="internetClient" />
     <DeviceCapability Name="lowLevel"/>

@@ -15,11 +15,14 @@ namespace WinKeg.DB.Controllers
             // matching hash.
             foreach(User u in users)
             {
-                HashedPassword userPasscode = new HashedPassword(u.EncryptedPasscode, u.PCSalt);
-                if (userPasscode.Check(passcode))
+                if(null != u.EncryptedPasscode)
                 {
-                    userPasscode = null;
-                    return true; // Passcode matches
+                    HashedPassword userPasscode = new HashedPassword(u.EncryptedPasscode, u.PCSalt);
+                    if (userPasscode.Check(passcode))
+                    {
+                        userPasscode = null;
+                        return true; // Passcode matches
+                    }
                 }
             }
             return false; // No matching passcode

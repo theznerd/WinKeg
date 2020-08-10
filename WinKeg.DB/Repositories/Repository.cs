@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using WinKeg.DB.Interfaces;
+using WinKeg.DB.Models;
 
 namespace WinKeg.DB.Repositories
 {
@@ -55,6 +57,11 @@ namespace WinKeg.DB.Repositories
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
             Context.Set<TEntity>().RemoveRange(entities);
+        }
+
+        public void Update(TEntity entity)
+        {
+            Context.Entry<TEntity>(entity).State = EntityState.Modified;
         }
     }
 }

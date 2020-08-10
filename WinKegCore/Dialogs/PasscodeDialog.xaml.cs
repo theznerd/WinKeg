@@ -22,7 +22,8 @@ namespace WinKegCore.Dialogs
     {
         SignInOK,
         SignInFail,
-        SignInCancel,
+        PasscodeSet,
+        Cancel,
         Nothing
     }
 
@@ -30,13 +31,25 @@ namespace WinKegCore.Dialogs
     {
         public PasscodeResult Result { get; private set; }
         private bool isForAdmin { get; set; }
+        private bool setPasscode { get; set; }
+        private int userId { get; set; }
 
         public PasscodeDialog(bool forAdmin)
         {
             this.InitializeComponent();
             this.Opened += PasscodeAdmin_Opened;
             this.Closing += PasscodeAdmin_Closing;
-            isForAdmin = forAdmin;
+            this.isForAdmin = forAdmin;
+            this.setPasscode = false;
+        }
+
+        public PasscodeDialog(int userId)
+        {
+            this.InitializeComponent();
+            this.Opened += PasscodeAdmin_Opened;
+            this.Closing += PasscodeAdmin_Closing;
+            this.setPasscode = true;
+            this.userId = userId;
         }
 
         private void PasscodeAdmin_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
@@ -51,12 +64,20 @@ namespace WinKegCore.Dialogs
 
         private void Secondary_Click(object sender, RoutedEventArgs e)
         {
-            this.Result = PasscodeResult.SignInCancel;
+            this.Result = PasscodeResult.Cancel;
             this.Hide();
         }
 
         private void Primary_Click(object sender, RoutedEventArgs e)
         {
+            if(setPasscode)
+            {
+                WinKeg.DB.Controllers.PasscodeController.SetPasscode(Passcode.Password, userId);
+                this.Result = PasscodeResult.PasscodeSet;
+                this.Hide();
+                return;
+            }
+
             if(WinKeg.DB.Controllers.PasscodeController.ValidateAdmin(Passcode.Password))
             {
                 this.Result = PasscodeResult.SignInOK;
@@ -66,6 +87,7 @@ namespace WinKegCore.Dialogs
                 this.Result = PasscodeResult.SignInFail;
             }
             this.Hide();
+            return;
         }
 
         private void PinClick(object sender, RoutedEventArgs e)

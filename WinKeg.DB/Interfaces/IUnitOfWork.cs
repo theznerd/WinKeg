@@ -10,6 +10,7 @@ namespace WinKeg.DB.Interfaces
         IBeverageRepository Beverages { get; }
         IHardwareRepository Hardware { get; }
         IHistoryEventRepository HistoryEvents { get; }
+        IKegeratorRepository Kegerator { get; }
         IKegeratorEventRepository KegeratorEvents { get; }
         IKegHistoryRepository KegHistories { get; }
         IKegRepository Kegs { get; }

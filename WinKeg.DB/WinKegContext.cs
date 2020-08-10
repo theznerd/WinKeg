@@ -13,7 +13,7 @@ namespace WinKeg.DB
     {
         public WinKegContext()
         {
-
+            
         }
 
         // Entities
@@ -30,8 +30,7 @@ namespace WinKeg.DB
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder
-                .UseSqlite(@"Data Source=WinKeg.db;");
+            optionsBuilder.UseSqlite(Configuration.ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
