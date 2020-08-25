@@ -268,10 +268,6 @@
       <Project>{d9138d5c-3122-4a76-816d-fc93957fed2a}</Project>
       <Name>WinKeg.DB</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WinKeg.Hardware\WinKeg.Hardware.csproj">
-      <Project>{3eea795b-c97b-4e8d-bab9-76e142095721}</Project>
-      <Name>WinKeg.Hardware</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\nexa-b.ttf" />

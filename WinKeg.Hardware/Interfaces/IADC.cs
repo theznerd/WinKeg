@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace WinKeg.Hardware.Interfaces
 {
-    public interface IRelay
+    public interface IADC
     {
         string DisplayName { get; }
-        void OpenRelay();
-        void CloseRelay();
+        Task<double> ReadDeviceAsync();
     }
 }

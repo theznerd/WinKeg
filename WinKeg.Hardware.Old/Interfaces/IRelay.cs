@@ -6,8 +6,5 @@ namespace WinKeg.Hardware.Interfaces
 {
     public interface IRelay
     {
-        string DisplayName { get; }
-        void OpenRelay();
-        void CloseRelay();
     }
 }

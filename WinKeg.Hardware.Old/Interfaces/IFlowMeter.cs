@@ -4,10 +4,7 @@ using System.Text;
 
 namespace WinKeg.Hardware.Interfaces
 {
-    public interface IRelay
+    public interface IFlowMeter
     {
-        string DisplayName { get; }
-        void OpenRelay();
-        void CloseRelay();
     }
 }

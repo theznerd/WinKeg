@@ -15,6 +15,7 @@ namespace WinKeg.DB.Interfaces
         IKegHistoryRepository KegHistories { get; }
         IKegRepository Kegs { get; }
         IUserRepository Users { get; }
+        ISettingRepository Settings { get; }
         int Complete();
     }
 }

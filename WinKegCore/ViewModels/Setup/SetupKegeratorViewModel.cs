@@ -23,11 +23,14 @@ namespace WinKegCore.ViewModels.Setup
             using (var unitOfWork = new UnitOfWork(new WinKegContext()))
             {
                 kegerator = unitOfWork.Kegerator.Get(1);
-                alreadySet = true;
             }
             if(null == kegerator)
             {
                 kegerator = new Kegerator();
+            }
+            else
+            {
+                alreadySet = true;
             }
         }
 
