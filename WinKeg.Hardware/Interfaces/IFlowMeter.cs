@@ -6,7 +6,6 @@ namespace WinKeg.Hardware.Interfaces
 {
     public interface IFlowMeter
     {
-        string DisplayName { get; }
         int CurrentFlowPulses { get; set; }
         int PreviousFlowPulses { get; set; }
 

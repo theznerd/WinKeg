@@ -59,7 +59,8 @@ namespace WinKeg.DB.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
                     InitialVolume = table.Column<double>(nullable: false),
-                    CurrentVolume = table.Column<double>(nullable: false)
+                    CurrentVolume = table.Column<double>(nullable: false),
+                    FlowCalibration = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,6 +131,7 @@ namespace WinKeg.DB.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Type = table.Column<string>(nullable: true),
+                    Class = table.Column<string>(nullable: true),
                     Data = table.Column<string>(nullable: true),
                     KegId = table.Column<int>(nullable: true),
                     KegeratorId = table.Column<int>(nullable: true)

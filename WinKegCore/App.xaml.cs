@@ -35,6 +35,7 @@ namespace WinKegCore
             container.RegisterWinRTServices();
 
             container.PerRequest<HomeViewModel>();
+            container.PerRequest<MainMenuViewModel>();
         }
 
         protected override void PrepareViewFirst(Frame rootFrame)
@@ -61,6 +62,7 @@ namespace WinKegCore
                 container.PerRequest<SetupStartViewModel>();
                 container.PerRequest<SetupKegeratorViewModel>();
                 container.PerRequest<SetupUserViewModel>();
+                container.PerRequest<SetupHardwareViewModel>();
                 DisplayRootView<SetupStartView>();
             }
             else

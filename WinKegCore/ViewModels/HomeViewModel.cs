@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using WinKegCore.CaliburnCustom;
 
 namespace WinKegCore.ViewModels
@@ -28,7 +29,7 @@ namespace WinKegCore.ViewModels
             var result = adminPasscode.Result;
             if(result == Dialogs.PasscodeResult.SignInOK)
             {
-                // navigate to menu
+                _navigationService.NavigateToViewModel<MainMenuViewModel>(new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromBottom });
             }
         }
     }

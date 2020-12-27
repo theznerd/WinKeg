@@ -8,6 +8,7 @@ namespace WinKeg.DB.Models
     {
         public int Id { get; set; }
         public string Type { get; set; }
+        public string Class { get; set; }
         public string Data { get; set; }
 
         public Keg Keg { get; set; }

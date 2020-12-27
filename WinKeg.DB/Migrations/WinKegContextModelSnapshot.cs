@@ -14,7 +14,7 @@ namespace WinKeg.DB.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.6");
+                .HasAnnotation("ProductVersion", "3.1.8");
 
             modelBuilder.Entity("WinKeg.DB.Models.Beverage", b =>
                 {
@@ -72,6 +72,9 @@ namespace WinKeg.DB.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Class")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Data")
                         .HasColumnType("TEXT");
@@ -132,6 +135,9 @@ namespace WinKeg.DB.Migrations
 
                     b.Property<double>("CurrentVolume")
                         .HasColumnType("REAL");
+
+                    b.Property<int>("FlowCalibration")
+                        .HasColumnType("INTEGER");
 
                     b.Property<double>("InitialVolume")
                         .HasColumnType("REAL");

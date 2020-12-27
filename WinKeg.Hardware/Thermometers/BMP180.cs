@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.I2c;
+using WinKeg.Hardware.Base;
 using WinKeg.Hardware.Interfaces;
 
 namespace WinKeg.Hardware.Thermometers
 {
-    public class BMP180 : IThermometer
+    public class BMP180 : HardwareBase<string>, IThermometer
     {
         // The BMP180 is a barometric pressure, temperature,
         // and altitude sensor released by Bosch. It's purpose 
@@ -19,7 +20,8 @@ namespace WinKeg.Hardware.Thermometers
         // I2C address of 0x77 which means it would need to be
         // multiplexed to support more than one, but for our
         // purposes, a single temperature reading will be sufficient.
-        public string DisplayName { get { return "BMP180"; } }
+        public static string DisplayName { get { return "Bosch BMP180"; } }
+        public static string SetupString { get { return "I²C Bus:string;"; } }
 
         private I2cConnectionSettings connectionSettings;
         private string I2cString;
@@ -39,7 +41,7 @@ namespace WinKeg.Hardware.Thermometers
         private short mc;
         private short md;
 
-        public BMP180(string busId)
+        public BMP180(string data) : base(data)
         {
             connectionSettings = new I2cConnectionSettings(0x77)
             {
@@ -47,7 +49,7 @@ namespace WinKeg.Hardware.Thermometers
                 SharingMode = I2cSharingMode.Shared
             };
 
-            I2cString = I2cDevice.GetDeviceSelector("I2C" + busId);
+            I2cString = I2cDevice.GetDeviceSelector("I2C" + data);
             InitializeDevice();
         }
 

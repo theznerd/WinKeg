@@ -129,11 +129,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setup.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\MainMenuViewModel.cs" />
+    <Compile Include="ViewModels\Setup\SetupHardwareViewModel.cs" />
     <Compile Include="ViewModels\Setup\SetupKegeratorViewModel.cs" />
     <Compile Include="ViewModels\Setup\SetupStartViewModel.cs" />
     <Compile Include="ViewModels\Setup\SetupUserViewModel.cs" />
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainMenuView.xaml.cs">
+      <DependentUpon>MainMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Setup\SetupKegsView.xaml.cs">
+      <DependentUpon>SetupKegsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Setup\SetupHardwareView.xaml.cs">
+      <DependentUpon>SetupHardwareView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Setup\SetupUserView.xaml.cs">
       <DependentUpon>SetupUserView.xaml</DependentUpon>
@@ -221,8 +232,11 @@
     <PackageReference Include="Caliburn.Micro">
       <Version>3.2.0</Version>
     </PackageReference>
+    <PackageReference Include="MahApps.Metro.IconPacks.Material">
+      <Version>4.8.0</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
-      <Version>3.1.6</Version>
+      <Version>3.1.8</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -230,7 +244,10 @@
       <Version>6.2.10</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>6.1.0</Version>
+      <Version>6.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.4.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +267,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MainMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Setup\SetupKegsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Setup\SetupHardwareView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Setup\SetupUserView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -267,6 +296,10 @@
     <ProjectReference Include="..\WinKeg.DB\WinKeg.DB.csproj">
       <Project>{d9138d5c-3122-4a76-816d-fc93957fed2a}</Project>
       <Name>WinKeg.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WinKeg.Hardware\WinKeg.Hardware.csproj">
+      <Project>{ddee09b5-4f10-4d6b-8be9-4b830ff50496}</Project>
+      <Name>WinKeg.Hardware</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

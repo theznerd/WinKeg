@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WinKeg.Hardware.Base;
 using WinKeg.Hardware.Interfaces;
 
 namespace WinKeg.Hardware.PowerMeters
 {
-    public class SCT013020 : IPowerMeter
+    public class SCT013020 : HardwareBase<string>, IPowerMeter
     {
         // The SCT-013-020 is a split-core current transformer
         // that allows you to measure the amperage of a line
@@ -15,7 +16,8 @@ namespace WinKeg.Hardware.PowerMeters
         // this to do rough calculations of wattage used by
         // the kegerator. Needs an analog to digital converter
         // such as the ADS1015 to get a value.
-        public string DisplayName { get { return "SCT-013-020"; } }
+        public static string DisplayName { get { return "SCT-013-020"; } }
+        public static string SetupString { get { return "AD Converter:IADC;"; } }
         
         // Which ADC should we be reading from?
         private IADC analogDigitalConverter;
@@ -28,9 +30,19 @@ namespace WinKeg.Hardware.PowerMeters
         private int LineVoltage = 120;
 
 
-        public SCT013020 (IADC adc)
+        public SCT013020 (string data) : base(data)
         {
-            analogDigitalConverter = adc;
+            try
+            {
+                Type t = Type.GetType("WinKeg.Hardware.Adapters." + data.Split(',')[0]);
+                string adcData = string.Concat(data.Split(',')[1], data.Split(',')[2]);
+
+                analogDigitalConverter = (IADC)Activator.CreateInstance(t, adcData); // add data to parameters
+            }
+            catch
+            {
+                // throw some error here that we don't recognize the type of ADC
+            }
         }
 
         public async Task<double> GetCurrentWattageAsync()

@@ -6,6 +6,7 @@
     <caliburn:CaliburnApplication.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="/Themes/WinKeg-Light.xaml" />
                 <ResourceDictionary>
                     <ResourceDictionary.ThemeDictionaries>

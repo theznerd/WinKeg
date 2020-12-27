@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinKeg.Hardware.Interfaces
+namespace WinKeg.Hardware.Base
 {
-    public interface IADC
+    public class HardwareBase<T>
     {
-        Task<double> ReadDeviceAsync();
+        public HardwareBase(T parameter)
+        {
+
+        }
     }
 }

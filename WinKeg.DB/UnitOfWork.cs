@@ -17,6 +17,8 @@ namespace WinKeg.DB
             Kegerator = new KegeratorRepository(_context);
             Users = new UserRepository(_context);
             Settings = new SettingRepository(_context);
+            Hardware = new HardwareRepository(_context);
+            Kegs = new KegRepository(_context); 
         }
 
         public IBeverageImageRepository BeverageImages { get; private set; }

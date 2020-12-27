@@ -8,7 +8,7 @@ using WinKeg.Hardware.Interfaces;
 
 namespace WinKeg.Hardware.Relays
 {
-    public class JBtek4450182 : GPIORelayBase, IRelay
+    public class JBtek4450182 : HardwareBase<string>, IRelay
     {
         // The JBtek 4450182, is a four-channel, 5V DC relay
         // that can be used to switch up to 10A at 250V, more
@@ -16,15 +16,19 @@ namespace WinKeg.Hardware.Relays
         // and the semi-direct activated EPDM solenoid valve
         // used to pour beer in the original incarnation of
         // WinKeg
-        public string DisplayName { get { return "JBtek 4-Channel 5V DC Relay"; } }
+        public static string DisplayName { get { return "JBtek 4-Channel 5V DC Relay"; } }
+        public static string SetupString { get { return "GPIO Pin:string;"; } }
 
         private GPIO gpio; // the GPIO class instance for opening/closing
         private int closedGpioState = 1; // determines whether the pin needs to be
                                          // driven high or low to close the relay
                                          // 1 = High, 0 = Low
 
-        public JBtek4450182(int relayPin) : base(relayPin)
+        public JBtek4450182(string data) : base(data)
         {
+            int gpioPin;
+            int.TryParse(data, out gpioPin);
+
             gpio = new GPIO(gpioPin);
 
             // Set the default state of the pin

@@ -7,7 +7,6 @@ namespace WinKeg.Hardware.Interfaces
 {
     public interface IThermometer
     {
-        string DisplayName { get; }
         Task<double> ReadTemperatureAsync();
     }
 }

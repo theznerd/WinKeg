@@ -8,7 +8,7 @@ using WinKeg.Hardware.Interfaces;
 
 namespace WinKeg.Hardware.FlowMeters
 {
-    public class a16042200ux0966 : GPIOFlowMeterBase, IFlowMeter
+    public class a16042200ux0966 : HardwareBase<string>, IFlowMeter
     {
         // The uxcell a16042200ux0966 is a 1/4" hall effect
         // water flow sensor that can handle rates of 0.25 -
@@ -16,14 +16,18 @@ namespace WinKeg.Hardware.FlowMeters
         // calibrated as part of the initial setup of the
         // kegerator... all the flow meter should care about
         // is counting pulses.
-        public string DisplayName { get { return "Uxcell 1/4\" Hall Effect"; } }
+        public static string DisplayName { get { return "Uxcell 1/4\" Hall Effect"; } }
+        public static string SetupString { get { return "GPIO Pin:string;"; } }
 
         private GPIO gpio;
         public int CurrentFlowPulses { get; set; }
         public int PreviousFlowPulses { get; set; }
 
-        public a16042200ux0966(int relayPin) : base(relayPin)
+        public a16042200ux0966(string data) : base(data)
         {
+            int gpioPin;
+            int.TryParse(data, out gpioPin);
+
             gpio = new GPIO(gpioPin);
             gpio.GpioPinPulsed += FlowSensorPulsed;
         }

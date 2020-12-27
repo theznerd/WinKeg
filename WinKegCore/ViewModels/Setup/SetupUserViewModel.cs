@@ -100,7 +100,7 @@ namespace WinKegCore.ViewModels.Setup
                 unitOfWork.Users.Update(user);
                 unitOfWork.Complete();
             }
-            _navigationService.NavigateToViewModel<SetupKegeratorViewModel>(new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+            _navigationService.NavigateToViewModel<SetupHardwareViewModel>(new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
         }
 
         public void Back()

@@ -9,14 +9,14 @@ using WinKeg.DB;
 namespace WinKeg.DB.Migrations
 {
     [DbContext(typeof(WinKegContext))]
-    [Migration("20200807070948_Initial")]
+    [Migration("20201226221222_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.6");
+                .HasAnnotation("ProductVersion", "3.1.8");
 
             modelBuilder.Entity("WinKeg.DB.Models.Beverage", b =>
                 {
@@ -74,6 +74,9 @@ namespace WinKeg.DB.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Class")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Data")
                         .HasColumnType("TEXT");
@@ -134,6 +137,9 @@ namespace WinKeg.DB.Migrations
 
                     b.Property<double>("CurrentVolume")
                         .HasColumnType("REAL");
+
+                    b.Property<int>("FlowCalibration")
+                        .HasColumnType("INTEGER");
 
                     b.Property<double>("InitialVolume")
                         .HasColumnType("REAL");

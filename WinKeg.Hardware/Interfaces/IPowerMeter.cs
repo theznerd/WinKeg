@@ -7,7 +7,6 @@ namespace WinKeg.Hardware.Interfaces
 {
     public interface IPowerMeter
     {
-        string DisplayName { get; }
         Task<double> GetCurrentWattageAsync();
     }
 }

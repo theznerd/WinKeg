@@ -5,10 +5,11 @@ using WinKeg.Hardware.Interfaces;
 using Windows.Devices.I2c;
 using Windows.Devices.Enumeration;
 using System.Threading.Tasks;
+using WinKeg.Hardware.Base;
 
 namespace WinKeg.Hardware.Adapters
 {
-    public class ADS1015 : IADC
+    public class ADS1015 : HardwareBase<string>, IADC
     {
         // The ADS1015 is an analog/digital converter from
         // Texas Instruments, which allows us to measure a
@@ -18,16 +19,9 @@ namespace WinKeg.Hardware.Adapters
         // the AIN0/AIN1 pins. Originally written to support
         // the SCT-013-020 current transformer. This could be
         // expanded at a future date to support other voltages
-        public string DisplayName { get { return "ADS1015"; } }
+        public static string DisplayName { get { return "ADS1015"; } }
+        public static string SetupString { get { return "Bus Id:string;Address:string;"; } }
         
-        public enum I2cAddress
-        {
-            Ground = 0x48,
-            VDD = 0x49,
-            SDA = 0x4A,
-            SCL = 0x4B
-        }
-
         private I2cConnectionSettings connectionSettings;
         private DeviceInformationCollection devices;
         private I2cDevice device;
@@ -38,9 +32,14 @@ namespace WinKeg.Hardware.Adapters
         // larger range (e.g. current transformer at 2V?)
         private double voltageConversion = 0.00048828125;
 
-        public ADS1015(string busId, I2cAddress address)
+        public ADS1015(string data) : base(data)
         {
-            connectionSettings = new I2cConnectionSettings((int)address)
+            string busId = data.Split(',')[0];
+            
+            int address;
+            int.TryParse(data.Split(',')[1], out address);
+
+            connectionSettings = new I2cConnectionSettings(address)
             {
                 BusSpeed = I2cBusSpeed.FastMode,
                 SharingMode = I2cSharingMode.Shared

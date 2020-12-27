@@ -30,7 +30,8 @@ namespace WinKeg.DB
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(Configuration.ConnectionString);
+            optionsBuilder.UseSqlite("Data Source=C:\\Users\\NathanZiehnert\\AppData\\Local\\Publishers\\ajc0x0rvn3gg0\\WinKegData\\WinKeg.db");
+            //optionsBuilder.UseSqlite(Configuration.ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
