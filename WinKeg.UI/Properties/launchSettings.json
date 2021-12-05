@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WinKeg.UI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "WinKeg.UI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

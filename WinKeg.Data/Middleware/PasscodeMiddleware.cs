@@ -8,7 +8,7 @@ using WinKeg.Data.Models;
 
 namespace WinKeg.Data.Middleware
 {
-    internal static class PasscodeMiddleware
+    public static class PasscodeMiddleware
     {
         private static bool ValidatePasscode(string passcode, IEnumerable<User> users)
         {
@@ -81,6 +81,25 @@ namespace WinKeg.Data.Middleware
                 u.LastModified = DateTime.Now;
                 return unitOfWork.Complete();
             }
+        }
+
+        public static string[] SetPasscode(string passcode)
+        {
+            // Check first to make sure we have no other
+            // matching passcodes - we can't have duplicates
+            // in the system since we're not relying on
+            // usernames or IDs
+            using (var unitOfWork = new UnitOfWork(new WinKegContext()))
+            {
+                bool passcodeAlreadyExists = ValidatePasscode(passcode, unitOfWork.Users.GetAll());
+                if (passcodeAlreadyExists)
+                {
+                    return null; // choose a different passcode
+                }
+            }
+
+            HashedPassword hp = HashedPassword.New(passcode);
+            return new string[] { hp.Hash, hp.Salt };
         }
     }
 }
