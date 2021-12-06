@@ -34,20 +34,18 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width=".25*" />
                 </Grid.ColumnDefinitions>
-                <HyperlinkButton Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <HyperlinkButton Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding CompressorPower}">
                     <StackPanel x:Name="CompressorButton" Background="Transparent">
                         <Viewbox Width="150" Height="150" Margin="0" HorizontalAlignment="Center">
-                            <TextBlock Text="&#xe903;" FontFamily="{StaticResource WinKegIcons}" Foreground="{Binding CompressorButtonColor}" />
-                            <!-- <ip:PackIconMaterial Kind="Power" Foreground="{Binding CompressorButtonColor}" /> -->
+                            <TextBlock Text="&#xe903;" FontFamily="{StaticResource WinKegIcons}" Foreground="{Binding CompressorColor}" />
                         </Viewbox>
-                        <TextBlock Foreground="{StaticResource WinKeg.Colors.AccentBase}" Margin="0,20,0,0" HorizontalAlignment="Center" FontSize="40" Text="Compressor On/Off" />
+                        <TextBlock Foreground="{Binding CompressorColor}" Margin="0,20,0,0" HorizontalAlignment="Center" FontSize="40" Text="{Binding CompressorText}" />
                     </StackPanel>
                 </HyperlinkButton>
                 <HyperlinkButton Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel Background="Transparent"  Orientation="Vertical">
                         <Viewbox Width="150" Height="150" Margin="0" HorizontalAlignment="Center">
                             <TextBlock Text="&#xe904;" FontFamily="{StaticResource WinKegIcons}" Foreground="{StaticResource WinKeg.Colors.AccentBase}" />
-                            <!-- <ip:PackIconMaterial Kind="Keg" Foreground="{StaticResource WinKeg.Colors.AccentBase}" /> -->
                         </Viewbox>
                         <TextBlock Foreground="{StaticResource WinKeg.Colors.AccentBase}" Margin="0,20,0,0" HorizontalAlignment="Center" FontSize="40">Keg Management</TextBlock>
                     </StackPanel>
@@ -56,7 +54,6 @@
                     <StackPanel Background="Transparent">
                         <Viewbox Width="150" Height="150" Margin="0" HorizontalAlignment="Center">
                             <TextBlock Text="&#xe902;" FontFamily="{StaticResource WinKegIcons}" Foreground="{StaticResource WinKeg.Colors.AccentBase}" />
-                            <!-- <ip:PackIconMaterial Kind="Account" Foreground="{StaticResource WinKeg.Colors.AccentBase}" /> -->
                         </Viewbox>
                         <TextBlock Foreground="{StaticResource WinKeg.Colors.AccentBase}" Margin="0,20,0,0" HorizontalAlignment="Center" FontSize="40">User Management</TextBlock>
                     </StackPanel>
@@ -65,7 +62,6 @@
                     <StackPanel Background="Transparent">
                         <Viewbox Width="150" Height="150" Margin="0" HorizontalAlignment="Center">
                             <TextBlock Text="&#xe901;" FontFamily="{StaticResource WinKegIcons}" Foreground="{StaticResource WinKeg.Colors.AccentBase}" />
-                            <!-- <ip:PackIconMaterial Kind="ThermometerLow" Foreground="{StaticResource WinKeg.Colors.AccentBase}" /> -->
                         </Viewbox>
                         <TextBlock Foreground="{StaticResource WinKeg.Colors.AccentBase}" Margin="0,20,0,0" HorizontalAlignment="Center" FontSize="40">Temperature</TextBlock>
                     </StackPanel>
@@ -74,7 +70,6 @@
                     <StackPanel Background="Transparent">
                         <Viewbox Width="150" Height="150" Margin="0" HorizontalAlignment="Center">
                             <TextBlock Text="&#xe900;" FontFamily="{StaticResource WinKegIcons}" Foreground="{StaticResource WinKeg.Colors.AccentBase}" />
-                            <!-- <ip:PackIconMaterial Kind="Cup" Foreground="{StaticResource WinKeg.Colors.AccentBase}" /> -->
                         </Viewbox>
                         <TextBlock Foreground="{StaticResource WinKeg.Colors.AccentBase}" Margin="0,20,0,0" HorizontalAlignment="Center" FontSize="40">Beverage Management</TextBlock>
                     </StackPanel>

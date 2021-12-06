@@ -13,10 +13,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using WinKeg.Data;
 using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -35,6 +37,12 @@ namespace WinKeg.UI
         /// </summary>
         public App()
         {
+            using(var UnitOfWork = new UnitOfWork(new WinKegContext()))
+            {
+                // load the database to speed up the first database read
+                UnitOfWork.Kegerator.GetAll();
+                UnitOfWork.Dispose();
+            }
             this.InitializeComponent();
         }
 
@@ -47,14 +55,14 @@ namespace WinKeg.UI
         {
             m_window = new Window();
             m_window.Content = rootFrame = new Frame();
-
-            // This isn't working yet for some reason
-            // Need to debug further
-            _appWindow = GetAppWindowForWindow(m_window);
-            _appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+            rootFrame.Navigate(typeof(Views.MainPageView));
 
             m_window.Activate();
-            rootFrame.Navigate(typeof(Views.MainPageView));
+
+            _appWindow = GetAppWindowForWindow(m_window);
+            _appWindow.SetPresenter(AppWindowPresenterKind.FullScreen); // bug in WinUI 3 1.0 where the bounds are not properly set
+                                                                        // https://github.com/microsoft/microsoft-ui-xaml/issues/6245
+                                                                        // https://github.com/microsoft/WindowsAppSDK/issues/1853
         }
 
         internal static Frame rootFrame;

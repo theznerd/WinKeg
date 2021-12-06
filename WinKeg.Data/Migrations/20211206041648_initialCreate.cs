@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WinKeg.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -73,6 +73,7 @@ namespace WinKeg.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
                     IsBeverageRestricted = table.Column<bool>(type: "INTEGER", nullable: false),
                     IsAdministrator = table.Column<bool>(type: "INTEGER", nullable: false),
                     EncryptedPasscode = table.Column<string>(type: "TEXT", nullable: false),

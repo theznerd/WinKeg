@@ -1,6 +1,5 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using WinKeg.UI.ViewModels;
-using WinKeg.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 

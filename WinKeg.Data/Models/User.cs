@@ -6,8 +6,8 @@ namespace WinKeg.Data.Models
     {
         public int Id { get; set; }
 
-        private string _name;
-        public string Name
+        private string? _name;
+        public string? Name
         {
             get => _name;
             set
@@ -20,7 +20,7 @@ namespace WinKeg.Data.Models
             }
         }
 
-        private bool _isBeverageRestricted;
+        private bool _isBeverageRestricted = false;
         public bool IsBeverageRestricted
         {
             get => _isBeverageRestricted;
@@ -34,7 +34,7 @@ namespace WinKeg.Data.Models
             }
         }
 
-        private bool _isAdministrator;
+        private bool _isAdministrator = false;
         public bool IsAdministrator
         {
             get => _isAdministrator;
@@ -48,8 +48,8 @@ namespace WinKeg.Data.Models
             }
         }
 
-        private string _encryptedPasscode;
-        public string EncryptedPasscode
+        private string? _encryptedPasscode;
+        public string? EncryptedPasscode
         {
             get => _encryptedPasscode;
             set
@@ -62,8 +62,8 @@ namespace WinKeg.Data.Models
             }
         }
 
-        private string _pcSalt;
-        public string PCSalt
+        private string? _pcSalt;
+        public string? PCSalt
         {
             get => _pcSalt;
             set
@@ -90,8 +90,8 @@ namespace WinKeg.Data.Models
             }
         }
 
-        private List<HistoryEvent> _historyEvents;
-        public List<HistoryEvent> HistoryEvents
+        private List<HistoryEvent>? _historyEvents;
+        public List<HistoryEvent>? HistoryEvents
         {
             get => _historyEvents;
             set
@@ -104,7 +104,7 @@ namespace WinKeg.Data.Models
             }
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
     }
 }

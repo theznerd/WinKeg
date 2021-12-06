@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI.Xaml.Controls;
+using WinKeg.UI.ViewModels.Menus;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -12,6 +13,9 @@ namespace WinKeg.UI.Views.Menus
         public UserAdminView()
         {
             this.InitializeComponent();
+
+            var vm = new UserAdminViewModel(new NavService());
+            this.DataContext = vm;
         }
     }
 }

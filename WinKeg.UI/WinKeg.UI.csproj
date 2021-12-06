@@ -99,6 +99,9 @@
     <Folder Include="ViewModels\Controls\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WinKeg.Data\WinKeg.Data.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Dialogs\TemperatureDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

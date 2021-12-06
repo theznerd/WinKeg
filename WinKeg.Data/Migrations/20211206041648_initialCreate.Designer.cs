@@ -11,8 +11,8 @@ using WinKeg.Data;
 namespace WinKeg.Data.Migrations
 {
     [DbContext(typeof(WinKegContext))]
-    [Migration("20211127221511_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20211206041648_initialCreate")]
+    partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -278,6 +278,9 @@ namespace WinKeg.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("LastModified")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PCSalt")

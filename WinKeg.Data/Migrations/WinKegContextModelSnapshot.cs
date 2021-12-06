@@ -278,6 +278,9 @@ namespace WinKeg.Data.Migrations
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("PCSalt")
                         .IsRequired()
                         .HasColumnType("TEXT");

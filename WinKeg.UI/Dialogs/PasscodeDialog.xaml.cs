@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using WinKeg.Data.Models;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -39,7 +40,6 @@ namespace WinKeg.UI.Dialogs
             this.userId = userId;
         }
 
-        /*
         public PasscodeDialog(User u)
         {
             InitializeComponent();
@@ -48,7 +48,8 @@ namespace WinKeg.UI.Dialogs
             user = u;
             this.setPasscode = true;
         }
-        */
+
+        private User user;
 
         private void PasscodeAdmin_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
         {
@@ -73,11 +74,14 @@ namespace WinKeg.UI.Dialogs
             // THIS IS TEMPORARY CODE
             // REMOVE BEFORE DEPLOYMENT
             if(Passcode.Password == "0000")
+            {
                 this.Result = PasscodeResult.SignInOK;
+                this.Hide();
+                return;
+            }
             // ABOVE IS TEMPORARY CODE
             // REMOVE BEFORE DEPLOYMENT
 
-            /*
             if (setPasscode && user == null)
             {
                 WinKeg.Data.Middleware.PasscodeMiddleware.SetPasscode(Passcode.Password, userId);
@@ -104,7 +108,7 @@ namespace WinKeg.UI.Dialogs
             {
                 this.Result = PasscodeResult.SignInFail;
             }
-            */
+
             this.Hide();
             return;
         }
