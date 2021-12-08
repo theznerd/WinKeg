@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,12 @@ namespace WinKeg.Data.DAL
         public KegRepository(WinKegContext dbContext) : base(dbContext)
         {
             _context = dbContext;
+        }
+
+        public IEnumerable<Beverage> GetCurrentBeveragesFromAllKegs()
+        {
+            IEnumerable<Keg> kegs = _context.Kegs.Include("Beverage").AsEnumerable();
+            return kegs.Select(k => k.Beverage).AsEnumerable();
         }
 
         public IEnumerable<KegHistory> GetKegHistories(int id)

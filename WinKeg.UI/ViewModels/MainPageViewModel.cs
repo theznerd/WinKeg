@@ -22,7 +22,7 @@ namespace WinKeg.UI.ViewModels
 
         private async void onLogoClick()
         {
-            Dialogs.PasscodeDialog adminPasscode = new Dialogs.PasscodeDialog(true);
+            Dialogs.PasscodeDialog adminPasscode = new Dialogs.PasscodeDialog(Dialogs.SigninType.Admin);
             adminPasscode.XamlRoot = App.rootFrame.XamlRoot;
             await adminPasscode.ShowAsync();
 

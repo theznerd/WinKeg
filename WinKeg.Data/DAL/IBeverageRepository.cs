@@ -9,6 +9,6 @@ namespace WinKeg.Data.DAL
 {
     public interface IBeverageRepository : IRepository<Beverage>
     {
-
+        public IEnumerable<Beverage> GetAllWithImages();
     }
 }

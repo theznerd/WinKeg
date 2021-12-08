@@ -1,0 +1,83 @@
+﻿<Page
+    x:Class="WinKeg.UI.Views.Menus.KegAdminView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinKeg.UI.Views.Menus"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{StaticResource WinKeg.Colors.ThemeBackground}">
+    <Viewbox Stretch="Uniform">
+        <Grid Width="1920" Height="1080">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="9*" />
+            </Grid.RowDefinitions>
+            <!-- Header -->
+            <TextBlock HorizontalAlignment="Center" FontSize="60" VerticalAlignment="Center">Keg Administration</TextBlock>
+            <HyperlinkButton Margin="19,0" HorizontalAlignment="Right" Command="{Binding CloseMenu}">
+                <Viewbox Width="70" Height="70">
+                    <SymbolIcon Symbol="Cancel" Foreground="{StaticResource WinKeg.Colors.AccentBase}" />
+                </Viewbox>
+            </HyperlinkButton>
+
+            <!-- Body -->
+            <Grid Grid.Row="1">
+                <!-- Left Column -->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <ListView ItemsSource="{Binding Kegs}" SelectedItem="{Binding SelectedKeg, Mode=TwoWay}" Margin="0,20,0,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:Name="KegTemplate">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="{Binding Name, Mode=OneWay}" FontSize="30" FontWeight="Bold" />
+                                <TextBlock FontSize="20">
+                                    <Run Text="Initial Volume (oz): " /><Run Text="{Binding InitialVolume, Mode=OneWay}" /><LineBreak /><Run Text="Current Volume (oz): " /><Run Text="{Binding CurrentVolume, Mode=OneWay}" /><LineBreak /><Run Text="Beverage: " /><Run Text="{Binding Beverage.Name, Mode=OneWay}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <!-- Right Column -->
+                <Grid Grid.Column="1" Margin="30,10,30,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock FontSize="50" Margin="0,10" Grid.Row="1">Name:</TextBlock>
+                    <TextBox FontSize="50" Margin="10,10" Grid.Column="1" Grid.Row="1" Text="{Binding SelectedKeg.Name, Mode=TwoWay}" />
+
+                    <TextBlock FontSize="50" Margin="0,10" Grid.Row="2">Initial Volume (oz):</TextBlock>
+                    <TextBox FontSize="50" Margin="10,10" Grid.Column="1" Grid.Row="2" Width="200" HorizontalAlignment="Left" Text="{Binding SelectedKeg.InitialVolume, Mode=TwoWay}" />
+
+                    <TextBlock FontSize="50" Margin="0,10" Grid.Row="3">Current Volume (oz):</TextBlock>
+                    <TextBox FontSize="50" Margin="10,10" Grid.Column="1" Grid.Row="3" Width="200" HorizontalAlignment="Left" Text="{Binding SelectedKeg.CurrentVolume, Mode=TwoWay}" />
+
+                    <TextBlock FontSize="50" Margin="0,10" Grid.Row="5">Current Beverage:</TextBlock>
+                    <TextBlock FontSize="50" Margin="10,10" Grid.Column="1" Grid.Row="5" Text="{Binding SelectedKeg.Beverage.Name, Mode=TwoWay}" />
+                    <Button Grid.Row="6" Margin="0,10" FontSize="50" Command="{Binding SetBeverage}">Set Beverage...</Button>
+
+                    <Button Grid.Row="7" Margin="0,10" FontSize="50" Command="{Binding CalibratePour}">Calibrate Pour...</Button>
+
+                    <Button Grid.Row="8" Margin="0,10" FontSize="50" Command="{Binding SaveBeverage}">Save Keg</Button>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Viewbox>
+</Page>

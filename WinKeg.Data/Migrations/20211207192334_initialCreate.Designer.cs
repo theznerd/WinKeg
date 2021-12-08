@@ -11,7 +11,7 @@ using WinKeg.Data;
 namespace WinKeg.Data.Migrations
 {
     [DbContext(typeof(WinKegContext))]
-    [Migration("20211206041648_initialCreate")]
+    [Migration("20211207192334_initialCreate")]
     partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -268,7 +268,6 @@ namespace WinKeg.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("EncryptedPasscode")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsAdministrator")
@@ -284,7 +283,6 @@ namespace WinKeg.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PCSalt")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

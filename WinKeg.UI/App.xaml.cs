@@ -66,7 +66,7 @@ namespace WinKeg.UI
         }
 
         internal static Frame rootFrame;
-        private Window m_window;
+        internal static Window m_window;
         private AppWindow _appWindow;
 
         private AppWindow GetAppWindowForWindow(Window w)

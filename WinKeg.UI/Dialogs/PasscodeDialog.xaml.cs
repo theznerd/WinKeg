@@ -1,6 +1,8 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using WinKeg.Data;
 using WinKeg.Data.Models;
+using System.Linq;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -15,19 +17,32 @@ namespace WinKeg.UI.Dialogs
         Nothing
     }
 
+    public enum SigninType
+    {
+        Admin,
+        BeverageRestriction
+    }
+
     public sealed partial class PasscodeDialog : ContentDialog
     {
         public PasscodeResult Result { get; private set; }
         private bool isForAdmin { get; set; }
+        private bool isForBevRestriction { get; set; }
         private bool setPasscode { get; set; }
         private int userId { get; set; }
 
-        public PasscodeDialog(bool forAdmin)
+        public PasscodeDialog(SigninType type)
         {
             this.InitializeComponent();
             this.Opened += PasscodeAdmin_Opened;
             this.Closing += PasscodeAdmin_Closing;
-            this.isForAdmin = forAdmin;
+            
+            if(type == SigninType.Admin)
+                this.isForAdmin = true;
+
+            if(type == SigninType.BeverageRestriction)
+                this.isForBevRestriction = true;
+            
             this.setPasscode = false;
         }
 
@@ -71,16 +86,21 @@ namespace WinKeg.UI.Dialogs
         {
             this.Result = PasscodeResult.SignInFail;
 
-            // THIS IS TEMPORARY CODE
-            // REMOVE BEFORE DEPLOYMENT
-            if(Passcode.Password == "0000")
+            // Sanity check... if all admins are gone, default pass is 0000
+            if(isForAdmin)
             {
-                this.Result = PasscodeResult.SignInOK;
-                this.Hide();
-                return;
+                int adminCount = 0;
+                using (var unitOfWork = new UnitOfWork(new WinKegContext()))
+                {
+                    adminCount = unitOfWork.Users.GetAdministrativeUsers().Count();
+                }
+                if (adminCount == 0 && Passcode.Password == "0000")
+                {
+                    this.Result = PasscodeResult.SignInOK;
+                    this.Hide();
+                    return;
+                }
             }
-            // ABOVE IS TEMPORARY CODE
-            // REMOVE BEFORE DEPLOYMENT
 
             if (setPasscode && user == null)
             {
@@ -99,8 +119,11 @@ namespace WinKeg.UI.Dialogs
                 return;
             }
             
-
-            if (WinKeg.Data.Middleware.PasscodeMiddleware.ValidateAdmin(Passcode.Password))
+            if (isForAdmin && WinKeg.Data.Middleware.PasscodeMiddleware.ValidateAdmin(Passcode.Password))
+            {
+                this.Result = PasscodeResult.SignInOK;
+            }
+            else if (isForBevRestriction && WinKeg.Data.Middleware.PasscodeMiddleware.ValidateNonRestricted(Passcode.Password))
             {
                 this.Result = PasscodeResult.SignInOK;
             }

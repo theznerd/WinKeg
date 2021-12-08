@@ -19,6 +19,8 @@ namespace WinKeg.UI.ViewModels
             TemperatureMenu = new RelayCommand(TemperatureButtonTapped);
             UserMenu = new RelayCommand(UserMenuTapped);
             CompressorPower = new RelayCommand(CompressorPowerTapped);
+            BeverageMenu = new RelayCommand(BeverageMenuTapped);
+            KegMenu = new RelayCommand(KegMenuTapped);
 
             using(var unitOfWork = new UnitOfWork(new WinKegContext()))
             {
@@ -35,6 +37,11 @@ namespace WinKeg.UI.ViewModels
                 };
             }
             CompressorOn = bool.Parse(compressorPower.Value);
+        }
+
+        private void BeverageMenuTapped()
+        {
+            _navigationService.Navigate(typeof(BeverageAdminView));
         }
 
         private Setting compressorPower;
@@ -100,10 +107,17 @@ namespace WinKeg.UI.ViewModels
             _navigationService.Navigate(typeof(UserAdminView));
         }
 
+        public void KegMenuTapped()
+        {
+            _navigationService.Navigate(typeof(KegAdminView));
+        }
+
         public RelayCommand CloseMenu { get; private set; }
         public RelayCommand TemperatureMenu { get; private set; }
         public RelayCommand UserMenu { get; private set; }
         public RelayCommand CompressorPower { get; private set; }
+        public RelayCommand BeverageMenu { get; private set;}
+        public RelayCommand KegMenu { get; private set; }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
     }

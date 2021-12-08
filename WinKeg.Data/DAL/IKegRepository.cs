@@ -10,5 +10,6 @@ namespace WinKeg.Data.DAL
     public interface IKegRepository : IRepository<Keg>
     {
         IEnumerable<KegHistory> GetKegHistories(int id);
+        IEnumerable<Beverage> GetCurrentBeveragesFromAllKegs();
     }
 }

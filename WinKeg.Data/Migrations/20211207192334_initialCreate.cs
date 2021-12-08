@@ -76,8 +76,8 @@ namespace WinKeg.Data.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     IsBeverageRestricted = table.Column<bool>(type: "INTEGER", nullable: false),
                     IsAdministrator = table.Column<bool>(type: "INTEGER", nullable: false),
-                    EncryptedPasscode = table.Column<string>(type: "TEXT", nullable: false),
-                    PCSalt = table.Column<string>(type: "TEXT", nullable: false),
+                    EncryptedPasscode = table.Column<string>(type: "TEXT", nullable: true),
+                    PCSalt = table.Column<string>(type: "TEXT", nullable: true),
                     LastModified = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>

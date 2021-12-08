@@ -37,9 +37,13 @@
     <None Remove="Assets\nexa-l.ttf" />
     <None Remove="Assets\winkeg.ttf" />
     <None Remove="BlankPage1.xaml" />
+    <None Remove="Dialogs\BeverageDialog.xaml" />
+    <None Remove="Dialogs\BeverageImageDialog.xaml" />
     <None Remove="Dialogs\TemperatureDialog.xaml" />
     <None Remove="Themes\WinKeg-Dark.xaml" />
     <None Remove="Themes\WinKeg-Light.xaml" />
+    <None Remove="Views\Menus\BeverageAdminView.xaml" />
+    <None Remove="Views\Menus\KegAdminView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -96,10 +100,27 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModels\Controls\" />
+    <ProjectReference Include="..\WinKeg.Data\WinKeg.Data.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WinKeg.Data\WinKeg.Data.csproj" />
+    <Page Update="Dialogs\BeverageDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Menus\KegAdminView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Dialogs\BeverageImageDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Menus\BeverageAdminView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Dialogs\TemperatureDialog.xaml">

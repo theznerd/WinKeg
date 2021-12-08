@@ -90,8 +90,8 @@ namespace WinKeg.Data.Models
             }
         }
 
-        private BeverageImage _image;
-        public BeverageImage Image
+        private BeverageImage? _image;
+        public BeverageImage? Image
         {
             get => _image;
             set
@@ -104,8 +104,8 @@ namespace WinKeg.Data.Models
             }
         }
 
-        private IList<KegHistory> _kegHistories;
-        public IList<KegHistory> KegHistories
+        private IList<KegHistory>? _kegHistories;
+        public IList<KegHistory>? KegHistories
         {
             get => _kegHistories;
             set
