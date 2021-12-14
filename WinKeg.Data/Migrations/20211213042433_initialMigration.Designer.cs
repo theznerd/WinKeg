@@ -11,8 +11,8 @@ using WinKeg.Data;
 namespace WinKeg.Data.Migrations
 {
     [DbContext(typeof(WinKegContext))]
-    [Migration("20211207192334_initialCreate")]
-    partial class initialCreate
+    [Migration("20211213042433_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,7 +35,7 @@ namespace WinKeg.Data.Migrations
                     b.Property<double>("IBU")
                         .HasColumnType("REAL");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsRestricted")
@@ -146,13 +146,13 @@ namespace WinKeg.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("BeverageId")
+                    b.Property<int?>("BeverageId")
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("CurrentVolume")
                         .HasColumnType("REAL");
 
-                    b.Property<int>("FlowCalibration")
+                    b.Property<int?>("FlowCalibration")
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("InitialVolume")
@@ -167,6 +167,22 @@ namespace WinKeg.Data.Migrations
                     b.HasIndex("BeverageId");
 
                     b.ToTable("Kegs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CurrentVolume = 0.0,
+                            InitialVolume = 0.0,
+                            Name = "Left Keg"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CurrentVolume = 0.0,
+                            InitialVolume = 0.0,
+                            Name = "Right Keg"
+                        });
                 });
 
             modelBuilder.Entity("WinKeg.Data.Models.Kegerator", b =>
@@ -294,9 +310,7 @@ namespace WinKeg.Data.Migrations
                 {
                     b.HasOne("WinKeg.Data.Models.BeverageImage", "Image")
                         .WithMany("Beverages")
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
                 });
@@ -339,9 +353,7 @@ namespace WinKeg.Data.Migrations
                 {
                     b.HasOne("WinKeg.Data.Models.Beverage", "Beverage")
                         .WithMany()
-                        .HasForeignKey("BeverageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BeverageId");
 
                     b.Navigation("Beverage");
                 });
@@ -377,8 +389,7 @@ namespace WinKeg.Data.Migrations
 
             modelBuilder.Entity("WinKeg.Data.Models.Keg", b =>
                 {
-                    b.Navigation("CurrentHistory")
-                        .IsRequired();
+                    b.Navigation("CurrentHistory");
 
                     b.Navigation("KegHardware");
                 });

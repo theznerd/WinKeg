@@ -6,9 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wkc="using:WinKeg.UI.Views.Controls" 
-    xmlns:viewmodels="using:WinKeg.UI.ViewModels" 
+    xmlns:viewmodels="using:WinKeg.UI.ViewModels"
+    xmlns:models="using:WinKeg.Data.Models"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainPageViewModel}"
     mc:Ignorable="d"
+    x:Name="MainPage"
     Background="{StaticResource WinKeg.Colors.ThemeBackground}"
     >
     <Viewbox Stretch="Uniform">
@@ -77,15 +79,28 @@
             </Grid>
 
             <!-- Kegs -->
+            <ScrollViewer Grid.Row="1" x:Name="KegScroller">
+                <ItemsRepeater ItemsSource="{Binding Kegs, Mode=OneWay}">
+                    <ItemsRepeater.Layout>
+                        <StackLayout Orientation="Horizontal" />
+                    </ItemsRepeater.Layout>
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate>
+                            <wkc:KegView Height="{Binding ActualHeight, ElementName=KegScroller}" Width="960" PourCommand="{Binding ElementName=MainPage, Path=DataContext.PourBeverage, Mode=OneWay}" />
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+            </ScrollViewer>
+            <!--
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <!-- #55000000 original -->
                 <wkc:KegView />
                 <wkc:KegView Grid.Column="1" />
             </Grid>
+            -->
         </Grid>
     </Viewbox>
 </Page>

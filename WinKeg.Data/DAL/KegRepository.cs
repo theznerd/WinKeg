@@ -16,6 +16,12 @@ namespace WinKeg.Data.DAL
             _context = dbContext;
         }
 
+        public IEnumerable<Keg> GetAllWithBeverageAndCurrentHistory()
+        {
+            IEnumerable<Keg> kegs = _context.Kegs.Include("CurrentHistory").Include("Beverage.Image").AsEnumerable();
+            return kegs;
+        }
+
         public IEnumerable<Beverage> GetCurrentBeveragesFromAllKegs()
         {
             IEnumerable<Keg> kegs = _context.Kegs.Include("Beverage").AsEnumerable();

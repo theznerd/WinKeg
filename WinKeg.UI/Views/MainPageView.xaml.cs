@@ -14,7 +14,6 @@ namespace WinKeg.UI.Views
         public MainPageView()
         {
             this.InitializeComponent();
-
             var vm = new MainPageViewModel(new NavService());
             this.DataContext = vm;
             ViewModel = DataContext as MainPageViewModel;

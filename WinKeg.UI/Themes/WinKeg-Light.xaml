@@ -19,6 +19,10 @@
 
     <!-- Base Colors -->
     <Color x:Key="WinKeg.Colors.ThemeForeground">#FF000000</Color>
+    <Color x:Key="WinKeg.Colors.ThemeForeground80">#CC000000</Color>
+    <Color x:Key="WinKeg.Colors.ThemeForeground60">#99000000</Color>
+    <Color x:Key="WinKeg.Colors.ThemeForeground40">#66000000</Color>
+    <Color x:Key="WinKeg.Colors.ThemeForeground20">#33000000</Color>
     <Color x:Key="WinKeg.Colors.ThemeBackground">#FFD5CCC0</Color>
 
     <!-- Font -->

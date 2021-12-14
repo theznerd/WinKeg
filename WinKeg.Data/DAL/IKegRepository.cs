@@ -11,5 +11,6 @@ namespace WinKeg.Data.DAL
     {
         IEnumerable<KegHistory> GetKegHistories(int id);
         IEnumerable<Beverage> GetCurrentBeveragesFromAllKegs();
+        IEnumerable<Keg> GetAllWithBeverageAndCurrentHistory();
     }
 }

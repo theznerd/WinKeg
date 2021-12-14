@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml;
+using WinKeg.Data;
+using WinKeg.Data.Models;
 using WinKeg.UI.Views;
 
 namespace WinKeg.UI.ViewModels
@@ -18,8 +21,39 @@ namespace WinKeg.UI.ViewModels
         {
             _navigationService = navigationService;
             OpenMenu = new RelayCommand(onLogoClick);
+            PourBeverage = new RelayCommand<Keg>(PourBeveragePressed, CanPourBeverage);
+
+            // load kegs!
+            using(var unitOfWork = new UnitOfWork(new WinKegContext()))
+            {
+                var kegs = unitOfWork.Kegs.GetAllWithBeverageAndCurrentHistory();
+                Kegs = kegs.ToList();
+            }
         }
 
+        public RelayCommand<Keg> PourBeverage { get; private set; }
+        private async void PourBeveragePressed(Keg k)
+        {
+            if(k.Beverage.IsRestricted)
+            {
+                Dialogs.PasscodeDialog restrictPasscode = new Dialogs.PasscodeDialog(Dialogs.SigninType.BeverageRestriction);
+                restrictPasscode.XamlRoot = App.rootFrame.XamlRoot;
+                await restrictPasscode.ShowAsync();
+
+                var result = restrictPasscode.Result;
+                if (result != Dialogs.PasscodeResult.SignInOK)
+                    return;
+            }
+            Dialogs.PourDialog pourDialog = new Dialogs.PourDialog(k);
+            pourDialog.XamlRoot = App.rootFrame.XamlRoot;
+            await pourDialog.ShowAsync();
+        }
+        private bool CanPourBeverage(Keg k)
+        {
+            return null != k.Beverage;
+        }
+
+        public RelayCommand OpenMenu { get; private set; }
         private async void onLogoClick()
         {
             Dialogs.PasscodeDialog adminPasscode = new Dialogs.PasscodeDialog(Dialogs.SigninType.Admin);
@@ -31,7 +65,17 @@ namespace WinKeg.UI.ViewModels
                 _navigationService.NavigateWithAnimation(typeof(MenuPageView), new Microsoft.UI.Xaml.Media.Animation.SlideNavigationTransitionInfo() { Effect = Microsoft.UI.Xaml.Media.Animation.SlideNavigationTransitionEffect.FromBottom });
         }
 
-        public RelayCommand OpenMenu { get; private set; }
+        private List<Keg> _kegs;
+        public List<Keg> Kegs
+        {
+            get => _kegs;
+            set
+            {
+                _kegs = value;
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Kegs"));
+            }
+        }
+        
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
     }

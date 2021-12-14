@@ -32,5 +32,21 @@ namespace WinKeg.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Keg>().HasData(
+                new Keg
+                {
+                    Id = 1,
+                    Name = "Left Keg"
+                },
+                new Keg
+                {
+                    Id = 2,
+                    Name = "Right Keg"
+                }
+            );
+        }
     }
 }

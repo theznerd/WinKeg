@@ -10,6 +10,9 @@ namespace WinKeg.Hardware.FlowMeters
     {
         int CurrentFlowPulses { get; set; }
         int PreviousFlowPulses { get; set; }
+        event EventHandler FlowPulsed;
+
+        void OnFlowPulsed(EventArgs e);
 
         void StartFlowRead();
         void StopFlowRead();

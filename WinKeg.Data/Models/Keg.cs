@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WinKeg.Data.Models
 {
@@ -30,6 +31,8 @@ namespace WinKeg.Data.Models
                 {
                     _initialVolume = value;
                     PropertyChanged(this, new PropertyChangedEventArgs("InitialVolume"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("RemainingPints"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("RemainingVolume"));
                 }
             }
         }
@@ -44,12 +47,14 @@ namespace WinKeg.Data.Models
                 {
                     _currentVolume = value;
                     PropertyChanged(this, new PropertyChangedEventArgs("CurrentVolume"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("RemainingPints"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("RemainingVolume"));
                 }
             }
         }
 
-        private int _flowCalibration;
-        public int FlowCalibration
+        private int? _flowCalibration;
+        public int? FlowCalibration
         {
             get => _flowCalibration;
             set
@@ -62,8 +67,9 @@ namespace WinKeg.Data.Models
             }
         }
 
-        private Beverage _beverage;
-        public Beverage Beverage
+        public int? BeverageId { get; set; }
+        private Beverage? _beverage;
+        public Beverage? Beverage
         {
             get => _beverage;
             set
@@ -76,8 +82,8 @@ namespace WinKeg.Data.Models
             }
         }
 
-        private KegHistory _currentHistory;
-        public KegHistory CurrentHistory
+        private KegHistory? _currentHistory;
+        public KegHistory? CurrentHistory
         {
             get => _currentHistory;
             set
@@ -103,6 +109,12 @@ namespace WinKeg.Data.Models
                 }
             }
         }
+
+        [NotMapped]
+        public double RemainingVolume => ((CurrentVolume / InitialVolume) * 100);
+
+        [NotMapped]
+        public string RemainingPints => Math.Floor(CurrentVolume / 16).ToString();
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
     }

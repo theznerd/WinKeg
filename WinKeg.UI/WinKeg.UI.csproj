@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
-    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <RootNamespace>WinKeg.UI</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Platforms>x86;x64;arm64</Platforms>
@@ -39,6 +39,7 @@
     <None Remove="BlankPage1.xaml" />
     <None Remove="Dialogs\BeverageDialog.xaml" />
     <None Remove="Dialogs\BeverageImageDialog.xaml" />
+    <None Remove="Dialogs\PourDialog.xaml" />
     <None Remove="Dialogs\TemperatureDialog.xaml" />
     <None Remove="Themes\WinKeg-Dark.xaml" />
     <None Remove="Themes\WinKeg-Light.xaml" />
@@ -58,6 +59,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -101,6 +103,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WinKeg.Data\WinKeg.Data.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Dialogs\PourDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Dialogs\BeverageDialog.xaml">

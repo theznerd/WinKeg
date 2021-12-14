@@ -1,19 +1,36 @@
 ﻿<UserControl
+    x:Name="KegViewRoot"
     x:Class="WinKeg.UI.Views.Controls.KegView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:WinKeg.UI.Views.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:WinKeg.UI.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
+    <UserControl.Resources>
+        <converter:ByteToImageConverter x:Name="byteConverter" x:Key="byteToImageConverter" />
+        <Storyboard x:Name="RevealDescription">
+            <DoubleAnimation
+                Storyboard.TargetName="BevDescription"
+                Storyboard.TargetProperty="Opacity"
+                From="0" To="0.7" Duration="0:0:0.3"
+                FillBehavior="HoldEnd"/>
+        </Storyboard>
+        <Storyboard x:Name="HideDescription">
+            <DoubleAnimation
+                Storyboard.TargetName="BevDescription"
+                Storyboard.TargetProperty="Opacity"
+                From="0.7" To="0" Duration="0:0:0.3"
+                FillBehavior="HoldEnd"/>
+        </Storyboard>
+    </UserControl.Resources>
     <Border Margin="40">
-        <Border.Shadow>
-            <ThemeShadow />
-        </Border.Shadow>
         <Grid Background="{StaticResource WinKeg.Colors.ThemeBackground}">
             <Grid.RowDefinitions>
+                <RowDefinition Height=".3*" />
                 <RowDefinition Height=".6*" />
                 <RowDefinition Height=".3*" />
                 <RowDefinition Height="2.5*" />
@@ -23,57 +40,56 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Viewbox>
-                <TextBlock HorizontalAlignment="Center" Margin="0,2,0,-2" Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">Boots with the Fur</TextBlock>
+                <TextBlock HorizontalAlignment="Center" Margin="0" Foreground="{StaticResource WinKeg.Colors.ThemeForeground40}" Text="{Binding Name, Mode=OneWay}"/>
             </Viewbox>
             <Viewbox Grid.Row="1">
-                <TextBlock HorizontalAlignment="Center" Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">Imperial Stout</TextBlock>
+                <TextBlock HorizontalAlignment="Center" Margin="0,2,0,-2" Foreground="{StaticResource WinKeg.Colors.ThemeForeground}" Text="{Binding Beverage.Name, Mode=OneWay}" />
             </Viewbox>
             <Viewbox Grid.Row="2">
+                <TextBlock HorizontalAlignment="Center" Foreground="{StaticResource WinKeg.Colors.ThemeForeground}" Text="{Binding Beverage.Style, Mode=OneWay}" />
+            </Viewbox>
+            <Viewbox Grid.Row="3">
                 <Grid>
                     <Ellipse Height="450" Width="450" Margin="0">
                         <Ellipse.Fill>
-                            <ImageBrush Stretch="UniformToFill" ImageSource="ms-appx:/Assets/cat.jpg" Opacity="1" />
+                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Beverage.Image.ImageBlob,Converter={StaticResource byteToImageConverter}}" Opacity="1" />
                         </Ellipse.Fill>
                     </Ellipse>
-                    <Grid Width="900" Height="500">
+                    <Grid x:Name="BevDescription" Width="900" Height="500" Background="{StaticResource WinKeg.Colors.ThemeBackground}" Opacity="0" Tapped="BevDescription_Tapped">
+                        
                         <TextBlock Foreground="{StaticResource WinKeg.Colors.ThemeForeground}"
-                                            Opacity="0"
-                                            HorizontalAlignment="Stretch" VerticalAlignment="Center" 
-                                            TextWrapping="WrapWholeWords" TextAlignment="Center"
-                                               
-                                            FontSize="40">
-                                        It's gonna knock your boots off... that's for sure. It's a basic bitch drink turned alcoholic. Notes of vanilla and caramel in an almost disgustingly sweet package.
-                        </TextBlock>
+                                   HorizontalAlignment="Stretch" VerticalAlignment="Center" 
+                                   TextWrapping="WrapWholeWords" TextAlignment="Center"
+                                   FontSize="40" Text="{Binding Beverage.Description, Mode=OneWay}" />
                     </Grid>
                 </Grid>
             </Viewbox>
-            <Viewbox Grid.Row="3">
+            <Viewbox Grid.Row="4">
                 <TextBlock Margin="0,0,5,0"
                                            
                                         Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
                                     <Run>ABV: </Run>
-                                    <Run>11.2</Run>
-                                    <Run>% | </Run>
+                                    <Run Text="{Binding Beverage.ABV, Mode=OneWay}" /><Run>% | </Run>
                                     <Run>IBUs: </Run>
-                                    <Run>34</Run>
+                                    <Run Text="{Binding Beverage.IBU, Mode=OneWay}" />
                 </TextBlock>
             </Viewbox>
-            <ProgressBar Grid.Row="4" Margin="40,5" 
+            <ProgressBar Grid.Row="5" Margin="40,5" 
                                         VerticalAlignment="Stretch" 
-                                        Value="90" 
+                                        Value="{Binding RemainingVolume, Mode=OneWay}" 
                                         HorizontalAlignment="Stretch" 
                                         Foreground="{StaticResource WinKeg.Colors.AccentBase}" />
-            <Viewbox Grid.Row="5">
+            <Viewbox Grid.Row="6">
                 <TextBlock Margin="0,0,5,0"
                                            
                                         Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
                                 <Run>Estimated 16oz Pints Remaining: </Run>
-                                <Run>32</Run>
+                                <Run Text="{Binding RemainingPints, Mode=OneWay}" />
                 </TextBlock>
             </Viewbox>
-            <Viewbox Grid.Row="6">
+            <Viewbox Grid.Row="7">
                 <Button HorizontalAlignment="Center" VerticalAlignment="Stretch"
-                                    Margin="5,10" Content="Pour Me!" />
+                        Margin="5,10" Content="Pour Me!" Command="{Binding ElementName=KegViewRoot, Path=PourCommand, Mode=OneWay}" CommandParameter="{Binding}" />
             </Viewbox>
         </Grid>
     </Border>

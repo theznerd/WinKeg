@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WinKeg.Data.Migrations
 {
-    public partial class initialCreate : Migration
+    public partial class initialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -97,7 +97,7 @@ namespace WinKeg.Data.Migrations
                     ABV = table.Column<double>(type: "REAL", nullable: false),
                     IBU = table.Column<double>(type: "REAL", nullable: false),
                     IsRestricted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    ImageId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ImageId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -106,8 +106,7 @@ namespace WinKeg.Data.Migrations
                         name: "FK_Beverages_BeverageImages_ImageId",
                         column: x => x.ImageId,
                         principalTable: "BeverageImages",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -119,8 +118,8 @@ namespace WinKeg.Data.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     InitialVolume = table.Column<double>(type: "REAL", nullable: false),
                     CurrentVolume = table.Column<double>(type: "REAL", nullable: false),
-                    FlowCalibration = table.Column<int>(type: "INTEGER", nullable: false),
-                    BeverageId = table.Column<int>(type: "INTEGER", nullable: false)
+                    FlowCalibration = table.Column<int>(type: "INTEGER", nullable: true),
+                    BeverageId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -129,8 +128,7 @@ namespace WinKeg.Data.Migrations
                         name: "FK_Kegs_Beverages_BeverageId",
                         column: x => x.BeverageId,
                         principalTable: "Beverages",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -217,6 +215,16 @@ namespace WinKeg.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Kegs",
+                columns: new[] { "Id", "BeverageId", "CurrentVolume", "FlowCalibration", "InitialVolume", "Name" },
+                values: new object[] { 1, null, 0.0, null, 0.0, "Left Keg" });
+
+            migrationBuilder.InsertData(
+                table: "Kegs",
+                columns: new[] { "Id", "BeverageId", "CurrentVolume", "FlowCalibration", "InitialVolume", "Name" },
+                values: new object[] { 2, null, 0.0, null, 0.0, "Right Keg" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Beverages_ImageId",

@@ -23,30 +23,22 @@ namespace WinKeg.UI.Dialogs
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class BeverageDialog : ContentDialog
+    public sealed partial class PourDialog : ContentDialog
     {
-        private BeverageDialogModel viewModel;
-
-        public BeverageDialog()
+        private PourDialogModel _vm;
+        private Keg _keg;
+        public PourDialog(Keg k)
         {
             this.InitializeComponent();
 
-            var vm = new BeverageDialogModel();
+            var vm = new PourDialogModel(k);
+            _vm = vm;
+            _keg = k;
             this.DataContext = vm;
-            viewModel = vm;
         }
 
-        public Beverage selectedBeverage { get; private set; }
-
-        private void Primary_Click(object sender, RoutedEventArgs e)
+        private void Close_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            selectedBeverage = viewModel.SelectedBeverage;
-            this.Hide();
-        }
-
-        private void Secondary_Click(object sender, RoutedEventArgs e)
-        {
-            selectedBeverage = null;
             this.Hide();
         }
     }

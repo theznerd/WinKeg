@@ -75,7 +75,7 @@
 
                     <Button Grid.Row="7" Margin="0,10" FontSize="50" Command="{Binding CalibratePour}">Calibrate Pour...</Button>
 
-                    <Button Grid.Row="8" Margin="0,10" FontSize="50" Command="{Binding SaveBeverage}">Save Keg</Button>
+                    <Button Grid.Row="8" Margin="0,10" FontSize="50" Command="{Binding SaveKeg}">Save Keg</Button>
                 </Grid>
             </Grid>
         </Grid>

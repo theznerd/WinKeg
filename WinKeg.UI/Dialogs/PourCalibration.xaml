@@ -16,21 +16,20 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock FontSize="80" HorizontalAlignment="Center" Margin="20">
-                <Run>Keg </Run>
-                <Run>1</Run>
+                <Run x:Name="KegName" />
                 <Run> Calibration</Run>
             </TextBlock>
             <StackPanel Grid.Row="1">
-                <Button FontSize="50" HorizontalAlignment="Center" Margin="10">Hold to Pour</Button>
+                <Button x:Name="PourButton" FontSize="50" HorizontalAlignment="Center" Margin="10" Tapped="Pour_Tapped">Tap to Pour</Button>
                 <TextBlock FontSize="50" Margin="10" HorizontalAlignment="Center">Measured Amount</TextBlock>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <muxc:NumberBox FontSize="50" Width="150" />
+                    <muxc:NumberBox FontSize="50" Width="150" x:Name="measuredOz" />
                     <TextBlock FontSize="50" VerticalAlignment="Center">Fluid oz</TextBlock>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Margin="20">
-                <Button x:Name="Primary" Width="200" Margin="5" FontSize="50">Save</Button>
-                <Button x:Name="Secondary" Width="200" Margin="5" FontSize="50">Cancel</Button>
+                <Button x:Name="Primary" Width="200" Margin="5" FontSize="50" Click="Primary_Click">Save</Button>
+                <Button x:Name="Secondary" Width="200" Margin="5" FontSize="50" Click="Secondary_Click">Cancel</Button>
             </StackPanel>
         </Grid>
     </Viewbox>

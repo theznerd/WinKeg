@@ -21,11 +21,14 @@ namespace WinKeg.UI.ViewModels.Menus
 
             using (var unitOfWork = new UnitOfWork(new WinKegContext()))
             {
-
+                Kegs = new ObservableCollection<Keg>(unitOfWork.Kegs.GetAllWithBeverageAndCurrentHistory());
+                unitOfWork.Dispose();
             }
 
             CloseMenu = new RelayCommand(CloseMenuPressed);
-            SetBeverage = new RelayCommand(SetBeveragePressed);
+            SetBeverage = new RelayCommand(SetBeveragePressed, CanSetBeverage);
+            CalibratePour = new RelayCommand(CalibratePourPressed, CanCalibratePour);
+            SaveKeg = new RelayCommand(SaveKegPressed, CanSaveKeg);
         }
 
         private ObservableCollection<Keg> _kegs;
@@ -47,6 +50,9 @@ namespace WinKeg.UI.ViewModels.Menus
             {
                 _selectedKeg = value;
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs("SelectedKeg"));
+                SetBeverage.RaiseCanExecuteChanged();
+                CalibratePour.RaiseCanExecuteChanged();
+                SaveKeg.RaiseCanExecuteChanged();
             }
         }
 
@@ -62,6 +68,43 @@ namespace WinKeg.UI.ViewModels.Menus
             Dialogs.BeverageDialog beverageDialog = new Dialogs.BeverageDialog();
             beverageDialog.XamlRoot = App.rootFrame.XamlRoot;
             await beverageDialog.ShowAsync();
+            if(null != beverageDialog.selectedBeverage)
+            {
+                SelectedKeg.Beverage = beverageDialog.selectedBeverage;
+                SelectedKeg.BeverageId = SelectedKeg.Beverage.Id;
+            }
+                
+        }
+        public bool CanSetBeverage()
+        {
+            return null != SelectedKeg;
+        }
+
+        public RelayCommand CalibratePour { get;private set; }
+        public async void CalibratePourPressed()
+        {
+            Dialogs.PourCalibration pourCalibration = new Dialogs.PourCalibration(SelectedKeg);
+            pourCalibration.XamlRoot = App.rootFrame.XamlRoot;
+            await pourCalibration.ShowAsync();
+        }
+        public bool CanCalibratePour()
+        {
+            return null != SelectedKeg;
+        }
+
+        public RelayCommand SaveKeg { get; private set; }
+        public void SaveKegPressed()
+        {
+            using(var unitOfWork = new UnitOfWork(new WinKegContext()))
+            {
+                unitOfWork.Kegs.Edit(SelectedKeg);
+                unitOfWork.Complete();
+                unitOfWork.Dispose();
+            }
+        }
+        public bool CanSaveKeg()
+        {
+            return null != SelectedKeg;
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };

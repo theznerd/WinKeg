@@ -20,8 +20,15 @@ namespace WinKeg.Hardware.FlowMeters
         public static string SetupString => "GPIO Pin:int";
 
         private GPIO gpio;
+        public event EventHandler FlowPulsed;
         public int CurrentFlowPulses { get; set; }
         public int PreviousFlowPulses { get; set; }
+
+        public void OnFlowPulsed(EventArgs e)
+        {
+            EventHandler handler = FlowPulsed;
+            handler?.Invoke(this, e);
+        }
 
         public a16042200ux0966(string initializationData)
         {
@@ -35,6 +42,7 @@ namespace WinKeg.Hardware.FlowMeters
         private void FlowSensorPulsed(object sender, PinValueChangedEventArgs pinValueChangedEventArgs)
         {
             CurrentFlowPulses++;
+            OnFlowPulsed(new EventArgs());
         }
 
         public void StartFlowRead()
