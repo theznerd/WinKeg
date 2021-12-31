@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using WinKeg.Data;
 using WinKeg.Data.Models;
 
 namespace WinKeg.UI.ViewModels.Controls
@@ -22,6 +23,22 @@ namespace WinKeg.UI.ViewModels.Controls
             timer.Interval = 5;
             timer.Elapsed += Timer_Elapsed;
         }
+
+        public PourDialogModel(Keg k, int userId)
+        {
+            _keg = k;
+            using (var unitOfWork = new UnitOfWork(new WinKegContext()))
+            {
+                _user = unitOfWork.Users.GetById(userId);
+                unitOfWork.Dispose();
+            }
+            PourBeer = new RelayCommand(PourBeerPressed);
+            timer = new Timer();
+            timer.Interval = 5;
+            timer.Elapsed += Timer_Elapsed;
+        }
+
+        private User _user { get; set; }
 
         private int pulses = 0;
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -74,6 +91,21 @@ namespace WinKeg.UI.ViewModels.Controls
 
             // write out the values!
             _keg.CurrentVolume = _keg.CurrentVolume - OzPoured;
+
+            // log a new history event
+            HistoryEvent history = new HistoryEvent()
+            {
+                CreatedOn = DateTime.Now,
+                Type = "BeveragePour",
+                Data = OzPoured.ToString("N1"),
+                UserID = _user == null ? null : _user.Id,
+                KegHistoryID = _keg.CurrentHistory.Id
+            };
+            using (var unitOfWork = new UnitOfWork(new WinKegContext()))
+            {
+                unitOfWork.HistoryEvents.Add(history);
+                unitOfWork.Complete();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };

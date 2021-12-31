@@ -23,18 +23,27 @@ namespace WinKeg.UI.ViewModels
             OpenMenu = new RelayCommand(onLogoClick);
             PourBeverage = new RelayCommand<Keg>(PourBeveragePressed, CanPourBeverage);
 
-            // load kegs!
+            // load data!
             using(var unitOfWork = new UnitOfWork(new WinKegContext()))
             {
                 var kegs = unitOfWork.Kegs.GetAllWithBeverageAndCurrentHistory();
                 Kegs = kegs.ToList();
+                _kegerator = unitOfWork.Kegerator.GetById(1);
             }
+        }
+
+        private Kegerator _kegerator;
+
+        public string KegeratorName
+        {
+            get { return _kegerator.Name; }
         }
 
         public RelayCommand<Keg> PourBeverage { get; private set; }
         private async void PourBeveragePressed(Keg k)
         {
-            if(k.Beverage.IsRestricted)
+            Dialogs.PourDialog pourDialog;
+            if (k.Beverage.IsRestricted)
             {
                 Dialogs.PasscodeDialog restrictPasscode = new Dialogs.PasscodeDialog(Dialogs.SigninType.BeverageRestriction);
                 restrictPasscode.XamlRoot = App.rootFrame.XamlRoot;
@@ -43,8 +52,12 @@ namespace WinKeg.UI.ViewModels
                 var result = restrictPasscode.Result;
                 if (result != Dialogs.PasscodeResult.SignInOK)
                     return;
+                pourDialog = new Dialogs.PourDialog(k, restrictPasscode.UserId);
             }
-            Dialogs.PourDialog pourDialog = new Dialogs.PourDialog(k);
+            else
+            {
+                pourDialog = new Dialogs.PourDialog(k);
+            }
             pourDialog.XamlRoot = App.rootFrame.XamlRoot;
             await pourDialog.ShowAsync();
         }

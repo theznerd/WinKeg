@@ -5,7 +5,6 @@ namespace WinKeg.Data.Models
     public class KegHistory : INotifyPropertyChanged
     {
         public int Id { get; set; }
-        // public Guid GUID { get; set; } // I don't believe this is actually necessary anymore
 
         private DateTime _createdOn;
 
@@ -50,22 +49,9 @@ namespace WinKeg.Data.Models
             }
         }
 
-        private int _kegID;
-        public int KegID
-        {
-            get => _kegID;
-            set
-            {
-                if(_kegID != value)
-                {
-                    _kegID = value;
-                    PropertyChanged(this, new PropertyChangedEventArgs("KegID"));
-                }
-            }
-        }
-
-        private Keg _keg;
-        public Keg Keg
+        public int? KegID { get; set; }
+        private Keg? _keg;
+        public Keg? Keg
         {
             get => _keg;
             set
@@ -78,8 +64,9 @@ namespace WinKeg.Data.Models
             }
         }
 
-        private Beverage _beverage;
-        public Beverage Beverage
+        public int? BeverageID { get; set; }
+        private Beverage? _beverage;
+        public Beverage? Beverage
         {
             get => _beverage;
             set

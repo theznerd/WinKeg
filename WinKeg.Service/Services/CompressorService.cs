@@ -54,11 +54,33 @@ namespace WinKeg.Service.Services
                 if (currentTemperature > desiredTemperature)
                 {
                     compressor.StartCompressor();
+                    KegeratorEvent kegeratorEvent = new KegeratorEvent()
+                    {
+                        Type = "CompressorStart",
+                        CreatedOn = DateTime.Now
+                    };
+
+                    using (var unitOfWork = new UnitOfWork(new WinKegContext()))
+                    {
+                        unitOfWork.KegeratorEvents.Add(kegeratorEvent);
+                        unitOfWork.Complete();
+                    }
                 }
                 else if (currentTemperature < desiredTemperature - 1) { }
                 else
                 {
                     compressor.StopCompressor();
+                    KegeratorEvent kegeratorEvent = new KegeratorEvent()
+                    {
+                        Type = "CompressorStop",
+                        CreatedOn = DateTime.Now
+                    };
+
+                    using (var unitOfWork = new UnitOfWork(new WinKegContext()))
+                    {
+                        unitOfWork.KegeratorEvents.Add(kegeratorEvent);
+                        unitOfWork.Complete();
+                    }
                 }
             }
             else

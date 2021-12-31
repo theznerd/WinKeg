@@ -6,9 +6,9 @@ namespace WinKeg.Data.Models
     {
         public int Id { get; set; }
 
-        private User _user;
-
-        public User User
+        public int? UserID { get; set; }
+        private User? _user;
+        public User? User
         {
             get => _user;
             set
@@ -17,6 +17,21 @@ namespace WinKeg.Data.Models
                 {
                     _user = value;
                     PropertyChanged(this, new PropertyChangedEventArgs("User"));
+                }
+            }
+        }
+
+        public int? KegHistoryID { get; set; }
+        private KegHistory? _kegHistory;
+        public KegHistory? KegHistory
+        {
+            get => _kegHistory;
+            set
+            {
+                if (_kegHistory != value)
+                {
+                    _kegHistory = value;
+                    PropertyChanged(this, new PropertyChangedEventArgs("KegHistory"));
                 }
             }
         }

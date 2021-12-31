@@ -10,8 +10,10 @@ namespace WinKeg.Data.Middleware
 {
     public static class PasscodeMiddleware
     {
-        private static bool ValidatePasscode(string passcode, IEnumerable<User> users)
+        private static Dictionary<int, bool> ValidatePasscode(string passcode, IEnumerable<User> users)
         {
+            var dict = new Dictionary<int, bool>();
+
             // Iterate through the users and test for a
             // matching hash.
             foreach (User u in users)
@@ -22,14 +24,16 @@ namespace WinKeg.Data.Middleware
                     if (userPasscode.Check(passcode))
                     {
                         userPasscode = null;
-                        return true; // Passcode matches
+                        dict.Add(u.Id, true);
+                        return dict; // Passcode matches
                     }
                 }
             }
-            return false; // No matching passcode
+            dict.Add(-1, false);
+            return dict; // No matching passcode
         }
 
-        public static bool ValidateAdmin(string passcode)
+        public static Dictionary<int, bool> ValidateAdmin(string passcode)
         {
             // Gather current list of admin users
             // Since we're not prompting for a username, we
@@ -39,11 +43,12 @@ namespace WinKeg.Data.Middleware
             // deal
             using (var unitOfWork = new UnitOfWork(new WinKegContext()))
             {
+
                 return ValidatePasscode(passcode, unitOfWork.Users.GetAdministrativeUsers());
             }
         }
 
-        public static bool ValidateNonRestricted(string passcode)
+        public static Dictionary<int, bool> ValidateNonRestricted(string passcode)
         {
             // Gather current list of non-restricted users
             // Since we're not prompting for a username, we
@@ -53,7 +58,7 @@ namespace WinKeg.Data.Middleware
             // deal
             using (var unitOfWork = new UnitOfWork(new WinKegContext()))
             {
-                return ValidatePasscode(passcode, unitOfWork.Users.GetNonRestrictedUsers());
+                return ValidatePasscode(passcode, unitOfWork.Users.GetNonRestrictedUsers()); 
             }
         }
 
@@ -65,7 +70,7 @@ namespace WinKeg.Data.Middleware
             // usernames or IDs
             using (var unitOfWork = new UnitOfWork(new WinKegContext()))
             {
-                bool passcodeAlreadyExists = ValidatePasscode(passcode, unitOfWork.Users.GetAll());
+                bool passcodeAlreadyExists = ValidatePasscode(passcode, unitOfWork.Users.GetAll()).First().Value;
                 if (passcodeAlreadyExists)
                 {
                     return -1; // choose a different passcode
@@ -91,7 +96,7 @@ namespace WinKeg.Data.Middleware
             // usernames or IDs
             using (var unitOfWork = new UnitOfWork(new WinKegContext()))
             {
-                bool passcodeAlreadyExists = ValidatePasscode(passcode, unitOfWork.Users.GetAll());
+                bool passcodeAlreadyExists = ValidatePasscode(passcode, unitOfWork.Users.GetAll()).First().Value;
                 if (passcodeAlreadyExists)
                 {
                     return null; // choose a different passcode

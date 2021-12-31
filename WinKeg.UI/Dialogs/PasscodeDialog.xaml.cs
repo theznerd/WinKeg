@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using WinKeg.Data;
 using WinKeg.Data.Models;
 using System.Linq;
+using System.Collections.Generic;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -65,6 +66,7 @@ namespace WinKeg.UI.Dialogs
         }
 
         private User user;
+        public int UserId { get; private set; }
 
         private void PasscodeAdmin_Closing(ContentDialog sender, ContentDialogClosingEventArgs args)
         {
@@ -118,18 +120,19 @@ namespace WinKeg.UI.Dialogs
                 this.Hide();
                 return;
             }
-            
-            if (isForAdmin && WinKeg.Data.Middleware.PasscodeMiddleware.ValidateAdmin(Passcode.Password))
+
+            KeyValuePair<int, bool> test = new KeyValuePair<int, bool>(-1, false);
+            if (isForAdmin)
             {
-                this.Result = PasscodeResult.SignInOK;
+                test = WinKeg.Data.Middleware.PasscodeMiddleware.ValidateAdmin(Passcode.Password).First();
+                this.UserId = test.Key;
+                this.Result = test.Value ? PasscodeResult.SignInOK : PasscodeResult.SignInFail;
             }
-            else if (isForBevRestriction && WinKeg.Data.Middleware.PasscodeMiddleware.ValidateNonRestricted(Passcode.Password))
+            else if (isForBevRestriction)
             {
-                this.Result = PasscodeResult.SignInOK;
-            }
-            else
-            {
-                this.Result = PasscodeResult.SignInFail;
+                test = WinKeg.Data.Middleware.PasscodeMiddleware.ValidateNonRestricted(Passcode.Password).First();
+                this.UserId = test.Key;
+                this.Result = test.Value ? PasscodeResult.SignInOK : PasscodeResult.SignInFail;
             }
 
             this.Hide();

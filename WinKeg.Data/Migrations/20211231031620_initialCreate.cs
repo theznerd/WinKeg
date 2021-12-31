@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WinKeg.Data.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class initialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -168,7 +168,7 @@ namespace WinKeg.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     CreatedOn = table.Column<DateTime>(type: "TEXT", nullable: false),
                     LastModified = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    KegID = table.Column<int>(type: "INTEGER", nullable: false),
+                    KegID = table.Column<int>(type: "INTEGER", nullable: true),
                     BeverageId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -184,8 +184,7 @@ namespace WinKeg.Data.Migrations
                         name: "FK_KegHistories_Kegs_KegID",
                         column: x => x.KegID,
                         principalTable: "Kegs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -215,6 +214,11 @@ namespace WinKeg.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Kegerators",
+                columns: new[] { "Id", "Location", "Name", "Owner" },
+                values: new object[] { 1, "Highlands Ranch, CO", "The Ziehnert's Beverage Fountain", "Nathan Ziehnert" });
 
             migrationBuilder.InsertData(
                 table: "Kegs",

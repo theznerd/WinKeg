@@ -111,7 +111,7 @@ namespace WinKeg.Data.Models
         }
 
         [NotMapped]
-        public double RemainingVolume => ((CurrentVolume / InitialVolume) * 100);
+        public double RemainingVolume => InitialVolume == 0 ? 0 : (CurrentVolume / InitialVolume * 100);
 
         [NotMapped]
         public string RemainingPints => Math.Floor(CurrentVolume / 16).ToString();

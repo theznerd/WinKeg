@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WinKeg.Data;
 
@@ -10,9 +11,10 @@ using WinKeg.Data;
 namespace WinKeg.Data.Migrations
 {
     [DbContext(typeof(WinKegContext))]
-    partial class WinKegContextModelSnapshot : ModelSnapshot
+    [Migration("20211231031620_initialCreate")]
+    partial class initialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -119,21 +121,21 @@ namespace WinKeg.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("KegHistoryID")
+                    b.Property<int?>("KegHistoryId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("UserID")
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("KegHistoryID");
+                    b.HasIndex("KegHistoryId");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("HistoryEvents");
                 });
@@ -243,7 +245,7 @@ namespace WinKeg.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("BeverageID")
+                    b.Property<int>("BeverageId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedOn")
@@ -257,7 +259,7 @@ namespace WinKeg.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BeverageID");
+                    b.HasIndex("BeverageId");
 
                     b.HasIndex("KegID")
                         .IsUnique();
@@ -343,15 +345,15 @@ namespace WinKeg.Data.Migrations
 
             modelBuilder.Entity("WinKeg.Data.Models.HistoryEvent", b =>
                 {
-                    b.HasOne("WinKeg.Data.Models.KegHistory", "KegHistory")
+                    b.HasOne("WinKeg.Data.Models.KegHistory", null)
                         .WithMany("HistoryEvents")
-                        .HasForeignKey("KegHistoryID");
+                        .HasForeignKey("KegHistoryId");
 
                     b.HasOne("WinKeg.Data.Models.User", "User")
                         .WithMany("HistoryEvents")
-                        .HasForeignKey("UserID");
-
-                    b.Navigation("KegHistory");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -369,7 +371,9 @@ namespace WinKeg.Data.Migrations
                 {
                     b.HasOne("WinKeg.Data.Models.Beverage", "Beverage")
                         .WithMany("KegHistories")
-                        .HasForeignKey("BeverageID");
+                        .HasForeignKey("BeverageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WinKeg.Data.Models.Keg", "Keg")
                         .WithOne("CurrentHistory")

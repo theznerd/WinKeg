@@ -37,28 +37,27 @@
                            VerticalAlignment="Center"
                            FontSize="30"
                            Grid.Column="1"
-                           Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
-                    The Ziehnert's Beverage Fountain <!-- TODO: Bind -->
-                </TextBlock>
+                           Foreground="{StaticResource WinKeg.Colors.ThemeForeground}"
+                           Text="{Binding KegeratorName}" />
 
                 <StackPanel Orientation="Vertical" Grid.Column="2" Margin="0,10,0,0">
                     <TextBlock 
                                FontSize="20"
                                Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
                         <Run Text="Current Kegerator Temperature: "  />
-                        <Run Text="34.7°F" /> <!-- TODO: Bind -->
+                        <Run Text="" /><Run Text="°F" /> <!-- {Binding KegeratorTemperature} -->
                     </TextBlock>
                     <TextBlock 
                                FontSize="20"
                                Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
                         <Run Text="Compressor Last Started: "  />
-                        <Run Text="08/02/2020 11:34:29 PM" /> <!-- TODO: Bind -->
+                        <Run Text="" /> <!-- {Binding CompressorLastStarted} -->
                     </TextBlock>
                     <TextBlock 
                                FontSize="20"
                                Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
                         <Run Text="Compressor Last Runtime: "  />
-                        <Run Text="Currently Running..." /> <!-- TODO: Bind -->
+                        <Run Text="" /> <!-- {Binding CompressorLastRuntime} -->
                     </TextBlock>
                 </StackPanel>
 
@@ -67,13 +66,13 @@
                                FontSize="20"
                                Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
                         <Run Text="Current Power Use: "  />
-                        <Run Text="11w" /> <!-- TODO: Bind -->
+                        <Run Text="" /> <!-- {Binding CurrentPowerUse} -->
                     </TextBlock>
                     <TextBlock 
                                FontSize="20"
                                Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
                         <Run Text="Monthly Power Use: "  />
-                        <Run Text="3kW" /> <!-- TODO: Bind -->
+                        <Run Text="" /> <!-- {Binding MonthlyPowerUse} -->
                     </TextBlock>
                 </StackPanel>
             </Grid>

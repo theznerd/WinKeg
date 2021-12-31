@@ -73,7 +73,12 @@ namespace WinKeg.UI.ViewModels.Menus
                 SelectedKeg.Beverage = beverageDialog.selectedBeverage;
                 SelectedKeg.BeverageId = SelectedKeg.Beverage.Id;
             }
-                
+            KegHistory kegHistory = new KegHistory()
+            {
+                KegID = SelectedKeg.Id,
+                BeverageID = SelectedKeg.Beverage.Id
+            };
+            SelectedKeg.CurrentHistory = kegHistory;
         }
         public bool CanSetBeverage()
         {
@@ -97,6 +102,10 @@ namespace WinKeg.UI.ViewModels.Menus
         {
             using(var unitOfWork = new UnitOfWork(new WinKegContext()))
             {
+                if(SelectedKeg.CurrentHistory.Id == 0)
+                {
+                    unitOfWork.KegHistories.Add(SelectedKeg.CurrentHistory);
+                }
                 unitOfWork.Kegs.Edit(SelectedKeg);
                 unitOfWork.Complete();
                 unitOfWork.Dispose();

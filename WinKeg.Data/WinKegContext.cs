@@ -47,6 +47,16 @@ namespace WinKeg.Data
                     Name = "Right Keg"
                 }
             );
+
+            modelBuilder.Entity<Kegerator>().HasData(
+                new Kegerator
+                {
+                    Id = 1,
+                    Name = "The Ziehnert's Beverage Fountain",
+                    Owner = "Nathan Ziehnert",
+                    Location = "Highlands Ranch, CO"
+                }
+            );
         }
     }
 }

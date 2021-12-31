@@ -43,16 +43,16 @@
                 <TextBlock HorizontalAlignment="Center" Margin="0" Foreground="{StaticResource WinKeg.Colors.ThemeForeground40}" Text="{Binding Name, Mode=OneWay}"/>
             </Viewbox>
             <Viewbox Grid.Row="1">
-                <TextBlock HorizontalAlignment="Center" Margin="0,2,0,-2" Foreground="{StaticResource WinKeg.Colors.ThemeForeground}" Text="{Binding Beverage.Name, Mode=OneWay}" />
+                <TextBlock HorizontalAlignment="Center" Margin="0,2,0,-2" Foreground="{StaticResource WinKeg.Colors.ThemeForeground}" Text="{Binding Beverage.Name, Mode=OneWay, FallbackValue=''}" />
             </Viewbox>
             <Viewbox Grid.Row="2">
-                <TextBlock HorizontalAlignment="Center" Foreground="{StaticResource WinKeg.Colors.ThemeForeground}" Text="{Binding Beverage.Style, Mode=OneWay}" />
+                <TextBlock HorizontalAlignment="Center" Foreground="{StaticResource WinKeg.Colors.ThemeForeground}" Text="{Binding Beverage.Style, Mode=OneWay, FallbackValue=''}" />
             </Viewbox>
             <Viewbox Grid.Row="3">
                 <Grid>
                     <Ellipse Height="450" Width="450" Margin="0">
                         <Ellipse.Fill>
-                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Beverage.Image.ImageBlob,Converter={StaticResource byteToImageConverter}}" Opacity="1" />
+                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Beverage.Image.ImageBlob,Converter={StaticResource byteToImageConverter}, FallbackValue=''}" Opacity="1" />
                         </Ellipse.Fill>
                     </Ellipse>
                     <Grid x:Name="BevDescription" Width="900" Height="500" Background="{StaticResource WinKeg.Colors.ThemeBackground}" Opacity="0" Tapped="BevDescription_Tapped">
@@ -60,7 +60,7 @@
                         <TextBlock Foreground="{StaticResource WinKeg.Colors.ThemeForeground}"
                                    HorizontalAlignment="Stretch" VerticalAlignment="Center" 
                                    TextWrapping="WrapWholeWords" TextAlignment="Center"
-                                   FontSize="40" Text="{Binding Beverage.Description, Mode=OneWay}" />
+                                   FontSize="40" Text="{Binding Beverage.Description, Mode=OneWay, FallbackValue=''}" />
                     </Grid>
                 </Grid>
             </Viewbox>
@@ -69,9 +69,9 @@
                                            
                                         Foreground="{StaticResource WinKeg.Colors.ThemeForeground}">
                                     <Run>ABV: </Run>
-                                    <Run Text="{Binding Beverage.ABV, Mode=OneWay}" /><Run>% | </Run>
+                                    <Run Text="{Binding Beverage.ABV, Mode=OneWay, FallbackValue='0.0'}" /><Run>% | </Run>
                                     <Run>IBUs: </Run>
-                                    <Run Text="{Binding Beverage.IBU, Mode=OneWay}" />
+                                    <Run Text="{Binding Beverage.IBU, Mode=OneWay, FallbackValue='0'}" />
                 </TextBlock>
             </Viewbox>
             <ProgressBar Grid.Row="5" Margin="40,5" 

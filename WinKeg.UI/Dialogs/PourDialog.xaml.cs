@@ -26,14 +26,24 @@ namespace WinKeg.UI.Dialogs
     public sealed partial class PourDialog : ContentDialog
     {
         private PourDialogModel _vm;
-        private Keg _keg;
+        //private Keg _keg;
         public PourDialog(Keg k)
         {
             this.InitializeComponent();
 
             var vm = new PourDialogModel(k);
             _vm = vm;
-            _keg = k;
+            //_keg = k;
+            this.DataContext = vm;
+        }
+
+        public PourDialog(Keg k, int userId)
+        {
+            this.InitializeComponent();
+
+            var vm = new PourDialogModel(k, userId);
+            _vm = vm;
+            //_keg = k;
             this.DataContext = vm;
         }
 

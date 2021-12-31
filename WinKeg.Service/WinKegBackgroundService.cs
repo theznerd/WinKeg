@@ -1,3 +1,5 @@
+using WinKeg.Data;
+using WinKeg.Data.Models;
 using WinKeg.Service.Services;
 
 namespace WinKeg.Service
@@ -17,6 +19,19 @@ namespace WinKeg.Service
             int compressorInterval = 3;
             int powerTimeout = 12;
             int powerInterval = 12;
+
+            KegeratorEvent kegeratorEvent = new KegeratorEvent()
+            {
+                Type = "PowerOn",
+                CreatedOn = DateTime.Now,
+                Message = "Kegerator powered on..."
+            };
+
+            using (var unitOfWork = new UnitOfWork(new WinKegContext()))
+            {
+                unitOfWork.KegeratorEvents.Add(kegeratorEvent);
+                unitOfWork.Complete();
+            }
 
             while (!stoppingToken.IsCancellationRequested)
             {

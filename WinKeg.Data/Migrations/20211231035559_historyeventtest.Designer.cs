@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WinKeg.Data;
 
@@ -10,9 +11,10 @@ using WinKeg.Data;
 namespace WinKeg.Data.Migrations
 {
     [DbContext(typeof(WinKegContext))]
-    partial class WinKegContextModelSnapshot : ModelSnapshot
+    [Migration("20211231035559_historyeventtest")]
+    partial class historyeventtest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -119,7 +121,7 @@ namespace WinKeg.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("KegHistoryID")
+                    b.Property<int?>("KegHistoryId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Type")
@@ -131,7 +133,7 @@ namespace WinKeg.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("KegHistoryID");
+                    b.HasIndex("KegHistoryId");
 
                     b.HasIndex("UserID");
 
@@ -343,15 +345,13 @@ namespace WinKeg.Data.Migrations
 
             modelBuilder.Entity("WinKeg.Data.Models.HistoryEvent", b =>
                 {
-                    b.HasOne("WinKeg.Data.Models.KegHistory", "KegHistory")
+                    b.HasOne("WinKeg.Data.Models.KegHistory", null)
                         .WithMany("HistoryEvents")
-                        .HasForeignKey("KegHistoryID");
+                        .HasForeignKey("KegHistoryId");
 
                     b.HasOne("WinKeg.Data.Models.User", "User")
                         .WithMany("HistoryEvents")
                         .HasForeignKey("UserID");
-
-                    b.Navigation("KegHistory");
 
                     b.Navigation("User");
                 });

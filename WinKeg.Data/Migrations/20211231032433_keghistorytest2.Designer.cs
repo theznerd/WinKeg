@@ -11,8 +11,8 @@ using WinKeg.Data;
 namespace WinKeg.Data.Migrations
 {
     [DbContext(typeof(WinKegContext))]
-    [Migration("20211213042433_initialMigration")]
-    partial class initialMigration
+    [Migration("20211231032433_keghistorytest2")]
+    partial class keghistorytest2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -206,6 +206,15 @@ namespace WinKeg.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Kegerators");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Location = "Highlands Ranch, CO",
+                            Name = "The Ziehnert's Beverage Fountain",
+                            Owner = "Nathan Ziehnert"
+                        });
                 });
 
             modelBuilder.Entity("WinKeg.Data.Models.KegeratorEvent", b =>
@@ -236,13 +245,13 @@ namespace WinKeg.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("BeverageId")
+                    b.Property<int?>("BeverageID")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("KegID")
+                    b.Property<int?>("KegID")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("LastModified")
@@ -250,7 +259,7 @@ namespace WinKeg.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BeverageId");
+                    b.HasIndex("BeverageID");
 
                     b.HasIndex("KegID")
                         .IsUnique();
@@ -362,15 +371,11 @@ namespace WinKeg.Data.Migrations
                 {
                     b.HasOne("WinKeg.Data.Models.Beverage", "Beverage")
                         .WithMany("KegHistories")
-                        .HasForeignKey("BeverageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BeverageID");
 
                     b.HasOne("WinKeg.Data.Models.Keg", "Keg")
                         .WithOne("CurrentHistory")
-                        .HasForeignKey("WinKeg.Data.Models.KegHistory", "KegID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WinKeg.Data.Models.KegHistory", "KegID");
 
                     b.Navigation("Beverage");
 
