@@ -25,8 +25,7 @@ namespace WinKeg.Hardware.Relays
 
         public JBtek4450182(string initializationData)
         {
-            int gpioPin;
-            int.TryParse(initializationData, out gpioPin);
+            int.TryParse(initializationData, out int gpioPin);
 
             gpio = new GPIO(gpioPin);
 
@@ -49,12 +48,12 @@ namespace WinKeg.Hardware.Relays
 
         public void CloseRelay()
         {
-            gpio.SetPinLow();
+            gpio.SetPinHigh();
         }
 
         public void OpenRelay()
         {
-            gpio.SetPinHigh();
+            gpio.SetPinLow();
         }
     }
 }

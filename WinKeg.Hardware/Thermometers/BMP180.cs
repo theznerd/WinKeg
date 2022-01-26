@@ -21,6 +21,7 @@ namespace WinKeg.Hardware.Thermometers
         public static string SetupString => "I²C Bus:int;";
 
         private I2cConnectionSettings connectionSettings;
+        private I2cBus bus;
         private I2cDevice device;
 
         // define calibration data for temperature
@@ -41,10 +42,10 @@ namespace WinKeg.Hardware.Thermometers
             int busId;
             int.TryParse(initializationData.Split(';')[0], out busId);
 
-            connectionSettings = new I2cConnectionSettings(busId, 0x77);
-
-            device = I2cDevice.Create(connectionSettings);
-
+            bus = I2cBus.Create(busId);
+            device = bus.CreateDevice(0x77);
+            // connectionSettings = new I2cConnectionSettings(busId, 0x77);
+            // device = I2cDevice.Create(connectionSettings);
             InitializeDevice();
         }
 

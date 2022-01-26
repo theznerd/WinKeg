@@ -44,6 +44,26 @@ namespace WinKeg.UI
                 UnitOfWork.Dispose();
             }
             this.InitializeComponent();
+
+            m_window = new Window();
+            m_window.Title = "WinKeg";
+            m_window.Content = rootFrame = new Frame();
+            m_window.Activate();
+            _appWindow = GetAppWindowForWindow(m_window);
+            _appWindow.SetPresenter(AppWindowPresenterKind.Default);
+            _appWindow.SetPresenter(AppWindowPresenterKind.FullScreen); // bug in WinUI 3 1.0 where the bounds are not properly set
+                                                                        // https://github.com/microsoft/microsoft-ui-xaml/issues/6245
+                                                                        // https://github.com/microsoft/WindowsAppSDK/issues/1853
+            
+            // the problem here is that m_window's bounds
+            // are still incorrect... may be able to correct
+            // this using PInvoke and User32, but for now
+            // we'll leave it as is :(
+            // I guess the correct solution is technically not to
+            // use frames and frame navigation? WinUI sorta does
+            // away with the concept.
+            rootFrame.Navigate(typeof(Views.MainPageView));
+
         }
 
         /// <summary>
@@ -53,21 +73,12 @@ namespace WinKeg.UI
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new Window();
-            m_window.Content = rootFrame = new Frame();
-            rootFrame.Navigate(typeof(Views.MainPageView));
-
-            m_window.Activate();
-
-            _appWindow = GetAppWindowForWindow(m_window);
-            _appWindow.SetPresenter(AppWindowPresenterKind.FullScreen); // bug in WinUI 3 1.0 where the bounds are not properly set
-                                                                        // https://github.com/microsoft/microsoft-ui-xaml/issues/6245
-                                                                        // https://github.com/microsoft/WindowsAppSDK/issues/1853
+            
         }
 
         internal static Frame rootFrame;
         internal static Window m_window;
-        private AppWindow _appWindow;
+        internal static AppWindow _appWindow;
 
         private AppWindow GetAppWindowForWindow(Window w)
         {

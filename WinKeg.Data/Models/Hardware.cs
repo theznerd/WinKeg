@@ -48,6 +48,7 @@ namespace WinKeg.Data.Models
             }
         }
 
+        public int? KegId { get; set; }
         private Keg _keg;
         public Keg Keg
         {
@@ -62,6 +63,7 @@ namespace WinKeg.Data.Models
             }
         }
 
+        public int? KegeratorId { get; set; }
         private Kegerator _kegerator;
         public Kegerator Kegerator
         {

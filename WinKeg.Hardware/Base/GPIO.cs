@@ -11,11 +11,11 @@ namespace WinKeg.Hardware.Base
     {
         private GpioController GpioController;
         private int PinId;
-        public event PinChangeEventHandler GpioPinPulsed;
+        public event PinChangeEventHandler? GpioPinPulsed;
 
         public GPIO(int pin)
         {
-            GpioController = new GpioController(PinNumberingScheme.Board);
+            GpioController = new GpioController(PinNumberingScheme.Logical);
             PinId = pin;
         }
 

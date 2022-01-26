@@ -11,5 +11,6 @@ namespace WinKeg.Data.DAL
     {
         public Hardware GetCompressor();
         public Hardware GetThermometer();
+        public Hardware GetPowerMeter();
     }
 }

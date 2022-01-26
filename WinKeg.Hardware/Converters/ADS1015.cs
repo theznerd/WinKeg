@@ -18,15 +18,15 @@ namespace WinKeg.Hardware.Converters
         // the SCT-013-020 current transformer. This could be
         // expanded at a future date to support other voltages
         public static string DisplayName => "ADS1015";
-        public static string SetupString => "Bus Id:int;Address:int;";
+        public static string SetupString => "I²C Bus:int;Address:int;";
 
         private I2cConnectionSettings connectionsettings;
         private I2cDevice device;
 
-        // +-0.4mV per tick @ 1v range (ADS1015 - 12-bits signed)
-        // we may want to expand this later for devices with a
-        // larger range (e.g. current transformer at 2V?)
-        private double voltageConversion = 0.00048828125;
+        // +-0.6mV per tick @ 1.414v range (ADS1015 - 12-bits signed)
+        // we expect the range to be up to 1.414v peak for an RMS
+        // output voltage of 1v
+        private double voltageConversion = 0.0006905339660024;
 
         public ADS1015(string initializationData)
         {
@@ -44,9 +44,9 @@ namespace WinKeg.Hardware.Converters
 
         private void InitializeDevice()
         {
-            device.Write(new byte[] { 0x01, 0x06, 0xA3 }); // Write the config register:
-                                                           // Multiplex AIN0/AIN1
-                                                           // Set gain to +-1.024v
+            device.Write(new byte[] { 0x01, 0x04, 0xA3 }); // Write the config register:
+                                                           // Multiplex AIN0/AIN1 (differential)
+                                                           // Set gain to +-2.048v
                                                            // Continuous conversion mode
                                                            // 2400 samples per second
                                                            // Disable comparator
@@ -87,7 +87,7 @@ namespace WinKeg.Hardware.Converters
                         // Bit shift right - 4 places (12-bit ADC)
                         var value = BitConverter.ToInt16(bytearray, 0) >> 4;
 
-                        // Convert to absolute value
+                        // Convert to absolute value (A/C is positive or negative)
                         value = Math.Abs(value);
 
                         // Check if we've reached a new maximum in our sample period

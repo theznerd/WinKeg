@@ -41,46 +41,20 @@ namespace WinKeg.Service.Services
                 unitOfWork.Dispose();
             }
 
-            bool compressorOn;
-            bool.TryParse(compressorPower.Value, out compressorOn);
-
-            double currentTemperature;
-            double desiredTemperature;
-            double.TryParse(curTemperature.Value, out currentTemperature);
-            double.TryParse(setTemperature.Value, out desiredTemperature);
+            bool.TryParse(compressorPower.Value, out bool compressorOn);
+            double.TryParse(curTemperature.Value, out double currentTemperature);
+            double.TryParse(setTemperature.Value, out double desiredTemperature);
 
             if(compressorOn)
             {
                 if (currentTemperature > desiredTemperature)
                 {
                     compressor.StartCompressor();
-                    KegeratorEvent kegeratorEvent = new KegeratorEvent()
-                    {
-                        Type = "CompressorStart",
-                        CreatedOn = DateTime.Now
-                    };
-
-                    using (var unitOfWork = new UnitOfWork(new WinKegContext()))
-                    {
-                        unitOfWork.KegeratorEvents.Add(kegeratorEvent);
-                        unitOfWork.Complete();
-                    }
                 }
                 else if (currentTemperature < desiredTemperature - 1) { }
                 else
                 {
                     compressor.StopCompressor();
-                    KegeratorEvent kegeratorEvent = new KegeratorEvent()
-                    {
-                        Type = "CompressorStop",
-                        CreatedOn = DateTime.Now
-                    };
-
-                    using (var unitOfWork = new UnitOfWork(new WinKegContext()))
-                    {
-                        unitOfWork.KegeratorEvents.Add(kegeratorEvent);
-                        unitOfWork.Complete();
-                    }
                 }
             }
             else

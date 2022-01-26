@@ -23,6 +23,11 @@ namespace WinKeg.Data.DAL
             return WinKegContext.Hardware.Where(h => h.Type == "Thermometer").FirstOrDefault();
         }
 
+        public Hardware GetPowerMeter()
+        {
+            return WinKegContext.Hardware.Where(h => h.Type == "PowerMeter").FirstOrDefault();
+        }
+
         public WinKegContext WinKegContext
         {
             get { return _dbContext as WinKegContext; }

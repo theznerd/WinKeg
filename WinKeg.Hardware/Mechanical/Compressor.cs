@@ -82,6 +82,7 @@ namespace WinKeg.Hardware.Mechanical
                     KegeratorEvent newEvent = new KegeratorEvent()
                     {
                         Type = "CompressorStart",
+                        Message = "Compressor started...",
                         CreatedOn = DateTime.Now
                     };
                     using (var unitOfWork = new UnitOfWork(new WinKegContext()))
@@ -100,16 +101,13 @@ namespace WinKeg.Hardware.Mechanical
 
         public void StopCompressor()
         {
-            GetCompressorState();
-            if(CompressorRunning)
-            {
-                relay.CloseRelay();
-                SetCompressorState(false);
-            }
+            relay.CloseRelay();
+            SetCompressorState(false);
 
             KegeratorEvent newEvent = new KegeratorEvent()
             {
                 Type = "CompressorStop",
+                Message = "Compressor Stopped...",
                 CreatedOn = DateTime.Now
             };
             using (var unitOfWork = new UnitOfWork(new WinKegContext()))

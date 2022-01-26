@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "UpSquared.Test (Unpackaged)": {
+      "commandName": "Project"
+    },
+    "UpSquared.Test (Remote - Package)": {
+      "commandName": "MsixPackage",
+      "remoteDebugEnabled": true,
+      "authenticationMode": "None",
+      "remoteDebugMachine": "WinKeg"
+    }
+  }
+}

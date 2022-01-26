@@ -1,6 +1,7 @@
 using WinKeg.Service;
+using WinKeg.Service.Services;
 
-IHost host = Host.CreateDefaultBuilder(args)
+using IHost host = Host.CreateDefaultBuilder(args)
     .UseWindowsService(options =>
     {
         options.ServiceName = "WinKeg Background Service";
@@ -8,6 +9,8 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddHostedService<WinKegBackgroundService>();
+        services.AddSingleton<TemperatureService>();
+        services.AddSingleton<CompressorService>();
     })
     .Build();
 

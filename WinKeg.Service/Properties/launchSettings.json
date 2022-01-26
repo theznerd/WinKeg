@@ -1,11 +1,30 @@
-﻿{
+{
   "profiles": {
-    "WinKeg.Service": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
+    "WSL": {
+      "commandName": "WSL2",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
-      }
+      },
+      "distributionName": ""
+    },
+    "WinKeg.Service - Remote": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Debug",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "remoteDebugEnabled": true,
+      "authenticationMode": "None",
+      "remoteDebugMachine": "WinKeg"
+    },
+    "Remote Service": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Debug\\WinKeg.Service.exe",
+      "workingDirectory": "C:\\Debug",
+      "remoteDebugEnabled": true,
+      "authenticationMode": "None",
+      "remoteDebugMachine": "WinKeg"
     }
   }
 }

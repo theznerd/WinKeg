@@ -32,7 +32,7 @@ namespace WinKeg.Hardware.PowerMeters
             try
             {
                 Type t = Type.GetType("WinKeg.Hardware.Converters." + initializationData.Split(';')[0]);
-                string adcData = initializationData.Split(';')[1];
+                string adcData = initializationData.Split(';')[1] + ";" + initializationData.Split(';')[2]; // let's fix this later... this is ugly
 
                 analogDigitalConverter = (IADC)Activator.CreateInstance(t, adcData);
             }

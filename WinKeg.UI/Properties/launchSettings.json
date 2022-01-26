@@ -1,10 +1,19 @@
 {
   "profiles": {
     "WinKeg.UI (Package)": {
-      "commandName": "MsixPackage"
+      "commandName": "MsixPackage",
+      "remoteDebugEnabled": true,
+      "authenticationMode": "None",
+      "remoteDebugMachine": "WinKeg"
     },
     "WinKeg.UI (Unpackaged)": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "remoteDebugEnabled": true,
+      "authenticationMode": "None",
+      "remoteDebugMachine": "WinKeg"
+    },
+    "WinKeg.UI (Local)": {
+      "commandName": "MsixPackage"
     }
   }
 }

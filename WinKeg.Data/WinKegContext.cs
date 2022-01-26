@@ -57,6 +57,16 @@ namespace WinKeg.Data
                     Location = "Highlands Ranch, CO"
                 }
             );
+
+            //modelBuilder.Entity<Hardware>().HasData(
+            //    new Hardware()
+            //    {
+            //        Id = 1,
+            //        Class = "BMP180",
+            //        KegeratorId = 1,
+
+            //    }
+            //);
         }
     }
 }
