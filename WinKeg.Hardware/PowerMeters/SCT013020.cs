@@ -7,7 +7,7 @@ using WinKeg.Hardware.Converters;
 
 namespace WinKeg.Hardware.PowerMeters
 {
-    internal class SCT013020 : IHardware, IPowerMeter
+    public class SCT013020 : IHardware, IPowerMeter
     {
         // The SCT-013-020 is a split-core current transformer
         // that allows you to measure the amperage of a line
@@ -25,7 +25,7 @@ namespace WinKeg.Hardware.PowerMeters
         // be better to measure actual line voltage, but
         // we're going for approximations here, not perfect
         // accuracy.
-        private int LineVoltage = 120;
+        private int LineVoltage = 125;
 
         public SCT013020(string initializationData)
         {

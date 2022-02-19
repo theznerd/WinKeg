@@ -9,6 +9,8 @@ namespace WinKeg.Hardware.Thermometers
 {
     // much of this code is stolen from:
     // https://github.com/gloveboxes/Windows-IoT-Core-Driver-Library/blob/master/Glovebox.IoT.Devices/Sensors/BMP280.cs
+    // There is definitely something wrong in the code/formulas here
+    // The .NET IoT Devices code works fine. Use that instead for now.
 
     public class BMP280 : IHardware, IThermometer
     {
@@ -20,6 +22,7 @@ namespace WinKeg.Hardware.Thermometers
         // it would need to be multiplexed to support more than
         // one, but for our purposes, a single temperature
         // reading will be sufficient.
+
         public static string DisplayName => "Bosch® BMP280";
         public static string SetupString => "I²C Bus:int;";
 
@@ -41,7 +44,7 @@ namespace WinKeg.Hardware.Thermometers
         };
 
         const byte TempPressure16xOverSampling = 0xB7; // 16x ovesampling for Temperature and Pressure
-
+        const byte Temp1xOverSamplingPressureDisableNormalMode = 0x23; // Disable pressure measurement, 1x oversampling, and set normal mode
         public BMP280(string initializationData)
         {
             int busId;
@@ -60,7 +63,10 @@ namespace WinKeg.Hardware.Thermometers
             dig_T3 = Read16_LE(Register.REGISTER_DIG_T3);
 
             // set oversampling to 16x
-            Write8(Register.REGISTER_CONTROL, TempPressure16xOverSampling);
+            // Write8(Register.REGISTER_CONTROL, TempPressure16xOverSampling);
+
+            // set the control register
+            Write8(Register.REGISTER_CONTROL, Temp1xOverSamplingPressureDisableNormalMode);
         }
 
         private void Write8(Register register, byte value)
@@ -71,14 +77,14 @@ namespace WinKeg.Hardware.Thermometers
         private ushort ReadU16(Register register)
         {
             byte[] result = new byte[2];
-            device.WriteRead(new byte[] { (byte)register, 0x00 }, result);
+            device.WriteRead(new byte[] { (byte)register }, result);
             return (ushort)(result[0] << 8 | result[1]);
         }
 
         private short Read16(Register register)
         {
             byte[] result = new byte[2];
-            device.WriteRead(new byte[] {(byte)register, 0x00 }, result);
+            device.WriteRead(new byte[] {(byte)register }, result);
             return (short)(result[0] << 8 | result[1]);
         }
 
@@ -97,12 +103,12 @@ namespace WinKeg.Hardware.Thermometers
         private int Read24(Register register)
         {
             byte[] result = new byte[3];
-            device.WriteRead(new byte[] {(byte)register, 0x00 }, result);
+            device.WriteRead(new byte[] {(byte)register }, result);
             return result[0] << 16 | result[1] << 8 | result[2];
         }
 
         protected int t_fine;
-        public async Task<double?> ReadTemperatureAsync()
+        public async Task<double?> ReadFineTemperatureAsync()
         {
             try
             {
@@ -120,6 +126,29 @@ namespace WinKeg.Hardware.Thermometers
 
                 double T = (t_fine * 5 + 128) >> 8;
                 return Math.Round(T / 100D, 2);
+            }
+            catch
+            {
+                return null; // couldn't read from the device
+            }
+        }
+
+        public async Task<double?> ReadTemperatureAsync()
+        {
+            try
+            {
+                // The following formulas come from the
+                // datasheet for the BMP280
+                double var1, var2, T;
+
+                int adc_T = Read24(Register.REGISTER_TEMPDATA);
+                adc_T >>= 4;
+
+                var1 = (((double)adc_T) / 16384.0 - ((double)dig_T1) / 1024.0) * ((double)dig_T2);
+                var2 = ((((double)adc_T) / 131072.0 - ((double)dig_T1) / 8192.0) * (((double)adc_T) / 131072.0 - ((double)dig_T1) / 8192.0)) * ((double)dig_T3);
+                t_fine = (int)(var1 + var2);
+                T = (var1 + var2) / 5120.0;
+                return T;
             }
             catch
             {

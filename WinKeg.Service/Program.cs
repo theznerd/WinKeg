@@ -10,7 +10,8 @@ using IHost host = Host.CreateDefaultBuilder(args)
     {
         services.AddHostedService<WinKegBackgroundService>();
         services.AddSingleton<TemperatureService>();
-        services.AddSingleton<CompressorService>();
+        services.AddSingleton<PowerService>();
+        //services.AddSingleton<CompressorService>();
     })
     .Build();
 

@@ -13,7 +13,7 @@ namespace WinKeg.Hardware.Converters
         // Texas Instruments, which allows us to measure a
         // voltage in a 12-bit signed integer. Currently,
         // this implementation of the ADS1015 is limited to
-        // a 1 volt gain (will read +- 1.024v) and multiplexes
+        // AC 1.414volt (will read +- 2.048v) and multiplexes
         // the AIN0/AIN1 pins. Originally written to support
         // the SCT-013-020 current transformer. This could be
         // expanded at a future date to support other voltages
@@ -23,10 +23,9 @@ namespace WinKeg.Hardware.Converters
         private I2cConnectionSettings connectionsettings;
         private I2cDevice device;
 
-        // +-0.6mV per tick @ 1.414v range (ADS1015 - 12-bits signed)
-        // we expect the range to be up to 1.414v peak for an RMS
-        // output voltage of 1v
-        private double voltageConversion = 0.0006905339660024;
+        // 4.096v full scale, and 4096 step resolution
+        // equals 0.001v per step.
+        private double voltageConversion = 0.001;
 
         public ADS1015(string initializationData)
         {
@@ -44,14 +43,21 @@ namespace WinKeg.Hardware.Converters
 
         private void InitializeDevice()
         {
-            device.Write(new byte[] { 0x01, 0x04, 0xA3 }); // Write the config register:
+            device.Write(new byte[] { 0x01, 0x02, 0xA3 }); // Write the config register:
                                                            // Multiplex AIN0/AIN1 (differential)
                                                            // Set gain to +-2.048v
                                                            // Continuous conversion mode
                                                            // 2400 samples per second
                                                            // Disable comparator
-            device.Write(new byte[] { 0x02, 0x00, 0x00 }); // Set the low threshold
-            device.Write(new byte[] { 0x03, 0xFF, 0xFF }); // Set the high threshold
+
+            // device.Write(new byte[] { 0x01, 0x2A, 0xA3 }); // Write the config register:
+            //                                                // Multiplex AIN0/GND
+            //                                                // Set gain to +-2.048v
+            //                                                // Continuous conversion mode
+            //                                                // 2400 samples per second
+            //                                                // Disable comparator
+            device.Write(new byte[] { 0x02, 0x00, 0x00 }); // Set the comparator low threshold (not strictly necessary)
+            device.Write(new byte[] { 0x03, 0xFF, 0xFF }); // Set the comparator high threshold (not strictly necessary)
         }
 
         public async Task<double?> ReadAnalogValueAsync()
@@ -64,12 +70,15 @@ namespace WinKeg.Hardware.Converters
             }
 
             int maxValue = 0;
+            int max = 0;
+            int min = 0;
 
             await Task.Run(() =>
             {
                 // loop 1000 samples
                 // and then grab the maximum
-                // value returned from ADS1015
+                // and minimum values returned
+                // from ADS1015
                 for (int i = 0; i < 1000; i++)
                 {
                     try
@@ -88,11 +97,17 @@ namespace WinKeg.Hardware.Converters
                         var value = BitConverter.ToInt16(bytearray, 0) >> 4;
 
                         // Convert to absolute value (A/C is positive or negative)
-                        value = Math.Abs(value);
+                        var absvalue = Math.Abs(value);
+
+                        if (value > max)
+                            max = value;
+
+                        if (value < min)
+                            min = value;
 
                         // Check if we've reached a new maximum in our sample period
-                        if (value > maxValue)
-                            maxValue = value;
+                        if (absvalue > maxValue)
+                            maxValue = absvalue;
                     }
                     catch
                     {
@@ -102,7 +117,10 @@ namespace WinKeg.Hardware.Converters
                 }
             });
 
-            return maxValue * voltageConversion;
+            Console.Write(max.ToString() + " " + min.ToString());
+            var measuredVoltage = (max - min) * voltageConversion;
+            //var measuredVoltage = ((double)maxValue * voltageConversion);
+            return measuredVoltage;
         }
     }
 }

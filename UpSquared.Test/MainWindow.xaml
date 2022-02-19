@@ -16,5 +16,9 @@
             <Run>Current Temperature: </Run>
             <Run x:Name="TempBlockF" /><Run>°F</Run>
         </TextBlock>
+        <TextBlock FontSize="40">
+            <Run>Current Wattage: </Run>
+            <Run x:Name="WattageBlock" /><Run>w</Run>
+        </TextBlock>
     </StackPanel>
 </Window>

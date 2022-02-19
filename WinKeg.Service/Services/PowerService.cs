@@ -19,7 +19,7 @@ namespace WinKeg.Service.Services
             Data.Models.Hardware hw;
             using (var unitOfWork = new UnitOfWork(new WinKegContext()))
             {
-                hw = unitOfWork.Hardware.GetCompressor();
+                hw = unitOfWork.Hardware.GetPowerMeter();
                 unitOfWork.Dispose();
             }
 

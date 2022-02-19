@@ -7,21 +7,21 @@ namespace WinKeg.Service
     public class WinKegBackgroundService : BackgroundService
     {
         private readonly CompressorService _compressorService;
-        // private readonly PowerService _powerService;
+        private readonly PowerService _powerService;
         private readonly TemperatureService _temperatureService;
 
-        // public WinKegBackgroundService(CompressorService compressorService, PowerService powerService, TemperatureService temperatureService)
-        //    => (_compressorService, _powerService, _temperatureService) = (compressorService, powerService, temperatureService);
+        public WinKegBackgroundService(CompressorService compressorService, PowerService powerService, TemperatureService temperatureService)
+           => (_compressorService, _powerService, _temperatureService) = (compressorService, powerService, temperatureService);
 
-        public WinKegBackgroundService(CompressorService compressorService, TemperatureService temperatureService)
-            => (_compressorService, _temperatureService) = (compressorService, temperatureService);
+        public WinKegBackgroundService(PowerService powerService, TemperatureService temperatureService)
+           => (_powerService, _temperatureService) = (powerService, temperatureService);
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             int compressorTimeout = 3;
             int compressorInterval = 3;
-            // int powerTimeout = 12;
-            // int powerInterval = 12;
+            int powerTimeout = 12;
+            int powerInterval = 12;
 
             KegeratorEvent kegeratorEvent = new KegeratorEvent()
             {
@@ -43,15 +43,15 @@ namespace WinKeg.Service
                     _compressorService.ExecuteCompressorLogic();
                     compressorTimeout = 0;
                 }
-                // if(powerTimeout >= powerInterval)
-                // {
-                //     _powerService.MonitorPowerAsync();
-                //     powerTimeout = 0;
-                // }
+                if(powerTimeout >= powerInterval)
+                {
+                    _powerService.MonitorPowerAsync();
+                    powerTimeout = 0;
+                }
                 _temperatureService.MonitorTemperatureAsync();
 
                 compressorTimeout++;
-                // powerTimeout++;
+                powerTimeout++;
 
                 await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
             }

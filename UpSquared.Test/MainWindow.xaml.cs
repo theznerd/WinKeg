@@ -14,6 +14,8 @@ using System.Timers;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using WinKeg.Hardware.Thermometers;
+using WinKeg.Hardware.PowerMeters;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -25,13 +27,15 @@ namespace UpSquared.Test
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        BMP180 thermometer;
+        BMP280IoT thermometer;
+        SCT013020 powerMeter;
         Timer timer;
 
         public MainWindow()
         {
             this.InitializeComponent();
-            thermometer = new BMP180("0");
+            thermometer = new BMP280IoT("0");
+            powerMeter = new SCT013020("ADS1015;0;72");
             timer = new Timer();
             timer.Interval = 1000;
             timer.Elapsed += Timer_Elapsed;
@@ -40,11 +44,15 @@ namespace UpSquared.Test
 
         private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            double? temp = await thermometer.ReadTemperatureAsync();
+            Task<double?> temp = thermometer.ReadTemperatureAsync();
+            double? watts = await powerMeter.GetCurrentWattageAsync();
+            double? tempR = temp.GetAwaiter().GetResult();
+
             DispatcherQueue.TryEnqueue(() => 
                 {
-                    TempBlock.Text = temp.ToString();
-                    TempBlockF.Text = string.Format("{0:F1}",(temp * 1.8)+32);
+                    TempBlock.Text = tempR.ToString();
+                    TempBlockF.Text = string.Format("{0:F1}",(tempR * 1.8)+32);
+                    WattageBlock.Text = watts.ToString();
                 });
             
         }

@@ -25,7 +25,7 @@ namespace WinKeg.Hardware.Relays
             int.TryParse(initializationData, out int gpioPin);
 
             // Technically the relay can be activated high
-            // or low, but we're going to force low because
+            // or low, but we're going to force it low because
             // it's just silly to open a relay on low voltage
             gpio = new GPIO(gpioPin);
             gpio.SetPinLow();
